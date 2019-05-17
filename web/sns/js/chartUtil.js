@@ -1,8 +1,20 @@
 
+function chartValueSum(chartData) {
+    var valueSum = 0;
+    for (var idx = 0; idx < chartData.length; idx++) {
+        valueSum += chartData[idx]["value"];
+    }
+    return addNumberComma(valueSum);
+}
+
 function addChartDataItemStyleColor(chartData) {
     for (var i = 0; i < chartData.length; i++) {
         chartData[i]["itemStyle"] = createRandomItemStyle();
         chartData[i]["value"] = chartData[i]["value"] * chartData[i]["value"];
+
+        if( i < 5){
+        chartData[i]["selected"] = false;
+        }
     }
     return chartData;
 }

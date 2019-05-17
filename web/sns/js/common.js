@@ -1,4 +1,4 @@
-function requestGet(url, sendOption, callBackFun) {
+function requestGet(url, callBackFun) {
     var head = {};
     head["Authorization"] = licence.licence;
 
@@ -9,8 +9,7 @@ function requestGet(url, sendOption, callBackFun) {
         contentType : "application/json; charset=UTF-8",
         dataType: 'json',
         success: function(data) {
-            console.log(data);
-            callBackFun(sendOption, data);
+            callBackFun(data);
         },
         error: function (request,status,error) {
             console.log("조회 중 오류가 발생하였습니다.");
@@ -19,3 +18,7 @@ function requestGet(url, sendOption, callBackFun) {
     });
 }
 
+
+function addNumberComma(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

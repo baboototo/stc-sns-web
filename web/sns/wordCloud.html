@@ -21,7 +21,8 @@
         chartTitle.setLink("https://www.daum.net");
         chartTitle.setPosition("center");
 
-        requestGet("http://192.168.100.59/api/word/cloud/a", chartTitle.getOption(), startChart);
+
+        requestGet("http://localhost/api/wordCloud/v1.0/words?keyword=문화", chartTitle.getOption(), startChart);
     }
 
 
@@ -32,7 +33,7 @@
         var option = {
             title: option,
             tooltip: {
-                show: true
+                show: false
             },
             series: [{
                 name: 'Google Trends',

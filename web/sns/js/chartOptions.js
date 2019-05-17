@@ -12,15 +12,4 @@ ChartTitle.prototype.getOption = function() {return this._chartOption};
 
 
 
-//
-// var stcChart;
-// stcChart = stcChart || {};
-//
-//
-// stcChart =
-
-
-
-
-
 
