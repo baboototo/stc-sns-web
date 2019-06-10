@@ -1,7 +1,7 @@
 function requestGet(url, callBackFun) {
     var head = {};
     head["Authorization"] = licence.licence;
-
+    $.support.cors = true;
     $.ajax({
         type:"GET",
         url: url,
@@ -13,11 +13,12 @@ function requestGet(url, callBackFun) {
         },
         error: function (request,status,error) {
             console.log("조회 중 오류가 발생하였습니다.");
-            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            console.log("code:"+request.status);
+            console.log("message:"+request.responseText);
+            console.log("error:"+error);
         }
     });
 }
-
 
 function addNumberComma(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

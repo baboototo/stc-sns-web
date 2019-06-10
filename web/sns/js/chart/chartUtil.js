@@ -4,7 +4,7 @@ function chartValueSum(chartData) {
     for (var idx = 0; idx < chartData.length; idx++) {
         valueSum += chartData[idx]["value"];
     }
-    return addNumberComma(valueSum);
+    return valueSum;
 }
 
 function addChartDataItemStyleColor(chartData) {

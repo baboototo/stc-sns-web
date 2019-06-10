@@ -6,12 +6,10 @@ var Chart = function(api) {
 
 
 (function($) {
-
-    $.getScript("./js/licence.js", function() {});
+    $.getScript("../js/common/licence.js", function() {});
 
     // Load echart.js
-    $.getScript("./js/echarts.js", function() {
+    $.getScript("../js/chart/echarts.js", function() {
         initChart();
     });
-
 })(jQuery);

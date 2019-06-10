@@ -1,305 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>STC</title>
+    <script type="text/javascript" src="./sns/js/common/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-안녕하세요.
-<div id="container1" style="height:400px;"></div>
-<div id="container" style="height:400px;"></div>
-<script src="./sns/js/jquery-1.12.4.min.js"></script>
-<script src="./sns/js/echarts.js"></script>
+
+<div style="margin: 40px;">
+    <div>
+        <input id="keyword" style="width: 200px;" value="문화">
+        <button id="btnSend" style="width: 100px;">전송</button>
+    </div>
+
+    <div>
+        <iframe style="width: 100%; height: 700px;" src="./sns/view/wordCloud.html" scrolling="no" frameborder="0" align="center"></iframe>
+    </div>
+
+    <div>
+        <div style="float: left; width: 49%; height: 350px;">
+            <iframe src="./sns/view/channelChart.html" style="width: 100%; height: 100%" scrolling="no" frameborder="0" align="center"></iframe>
+        </div>
+        <div style="float: left; width: 49%; height: 350px;">
+            <iframe src="./sns/view/channelChart.html" style="width: 100%; height: 100%" scrolling="no" frameborder="0" align="center"></iframe>
+        </div>
+    </div>
+
+    <div>
+        <div style="float: left; width: 49%; height: 500px;">
+            <iframe style="display:block; width:100%; height: 100%;" src="sns/view/keywordGrid.html" scrolling="no" frameborder="0" align="center"></iframe>
+        </div>
+        <div style="float: left; width: 49%; height: 500px;">
+            <iframe style="display:block; width:100%; height: 100%;" src="sns/view/keywordChart.html" scrolling="no" frameborder="0" align="center"></iframe>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
 
-    $.ajax("http://localhost/hello")
-        .done(function(msg) {
-            console.log(msg);
-        })
-        .fail(function() {
-            alert("fail");
+    $(document).ready(function(){
+        $("#btnSend").click(function(){
+            var keyword = encodeURIComponent($("#keyword").val());
+            $("iframe").each(function(){
+                $(this).get(0).contentWindow.setKeyword(keyword);
+            });
         });
+    });
 
-
-    var dom = document.getElementById("container1");
-    var myChart = echarts.init(dom);
-    var app = {};
-    option = null;
-    function createRandomItemStyle() {
-        return {
-            normal: {
-                color: 'rgb(' + [
-                    Math.round(Math.random() * 160),
-                    Math.round(Math.random() * 160),
-                    Math.round(Math.random() * 160)
-                ].join(',') + ')'
-            }
-        };
-    }
-
-    option = {
-        title: {
-            text: 'Google Trends',
-            link: 'http://www.google.com/trends/hottrends'
-        },
-        tooltip: {
-            show: true
-        },
-        series: [{
-            name: 'Google Trends',
-            type: 'wordCloud',
-            size: ['80%', '80%'],
-            textRotation : [0, 45, 90, -45],
-            textPadding: 0,
-            autoSize: {
-                enable: true,
-                minSize: 14
-            },
-            data: [
-                {
-                    name: "Sam S Club",
-                    value: 10000,
-                    itemStyle: {
-                        normal: {
-                            color: 'black'
-                        }
-                    }
-                },
-                {
-                    name: "Macys",
-                    value: 6181,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Amy Schumer",
-                    value: 4386,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Jurassic World",
-                    value: 4055,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Charter Communications",
-                    value: 2467,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Chick Fil A",
-                    value: 2244,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Planet Fitness",
-                    value: 1898,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Pitch Perfect",
-                    value: 1484,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Express",
-                    value: 1112,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Home",
-                    value: 965,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Johnny Depp",
-                    value: 847,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Lena Dunham",
-                    value: 582,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Lewis Hamilton",
-                    value: 555,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "KXAN",
-                    value: 550,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Mary Ellen Mark",
-                    value: 462,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Farrah Abraham",
-                    value: 366,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Rita Ora",
-                    value: 360,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Serena Williams",
-                    value: 282,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "NCAA baseball tournament",
-                    value: 273,
-                    itemStyle: createRandomItemStyle()
-                },
-                {
-                    name: "Point Break",
-                    value: 265,
-                    itemStyle: createRandomItemStyle()
-                }
-            ]
-        }]
-    };
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
 </script>
-
-
-<script type="text/javascript">
-    var dom = document.getElementById("container");
-    var myChart = echarts.init(dom);
-    var labelTop = {
-        normal : {
-            label : {
-                show : true,
-                position : 'center',
-                formatter : '{b}',
-                textStyle: {
-                    baseline : 'bottom'
-                }
-            },
-            labelLine : {
-                show : false
-            }
-        }
-    };
-    var labelFromatter = {
-        normal : {
-            label : {
-                formatter : function (params){
-                    return 100 - params.value + '%'
-                },
-                textStyle: {
-                    baseline : 'top'
-                }
-            }
-        },
-    }
-    var labelBottom = {
-        normal : {
-            color: '#ccc',
-            label : {
-                show : true,
-                position : 'center'
-            },
-            labelLine : {
-                show : false
-            }
-        },
-        emphasis: {
-            color: 'rgba(0,0,0,0)'
-        }
-    };
-    var radius = [40, 55];
-    option = {
-        legend: {
-            x : 'center',
-            y : 'center',
-            data:[
-                'GoogleMaps','Facebook','Youtube'
-            ]
-        },
-        title : {
-            text: 'The App World',
-            subtext: 'from global web index',
-            x: 'center'
-        },
-        toolbox: {
-            show : true,
-            feature : {
-                dataView : {show: true, readOnly: false},
-                magicType : {
-                    show: true,
-                    type: ['pie', 'funnel'],
-                    option: {
-                        funnel: {
-                            width: '20%',
-                            height: '30%',
-                            itemStyle : {
-                                normal : {
-                                    label : {
-                                        formatter : function (params){
-                                            return 'other\n' + params.value + '%\n'
-                                        },
-                                        textStyle: {
-                                            baseline : 'middle'
-                                        }
-                                    }
-                                },
-                            }
-                        }
-                    }
-                },
-                restore : {show: true},
-                saveAsImage : {show: true}
-            }
-        },
-        series : [
-            {
-                type : 'pie',
-                center : ['10%', '30%'],
-                radius : radius,
-                x: '0%', // for funnel
-                itemStyle : labelFromatter,
-                data : [
-                    {name:'other', value:46, itemStyle : labelBottom},
-                    {name:'GoogleMaps', value:54,itemStyle : labelTop}
-                ]
-            },
-            {
-                type : 'pie',
-                center : ['30%', '30%'],
-                radius : radius,
-                x:'20%', // for funnel
-                itemStyle : labelFromatter,
-                data : [
-                    {name:'other', value:56, itemStyle : labelBottom},
-                    {name:'Facebook', value:44,itemStyle : labelTop}
-                ]
-            },
-            {
-                type : 'pie',
-                center : ['80%', '30%'],
-                radius : radius,
-                x:'40%', // for funnel
-                itemStyle : labelFromatter,
-                data : [
-                    {name:'other', value:65, itemStyle : labelBottom},
-                    {name:'Youtube', value:35,itemStyle : labelTop}
-                ]
-            }
-        ]
-    };
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
-</script>
-
 
 
 </body>

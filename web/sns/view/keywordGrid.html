@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>STC</title>
+    <link type="text/css" rel="stylesheet" href="../css/grid/datatables.min.css">
+    <link type="text/css" rel="stylesheet" href="../css/grid/grid.css">
+    <script type="text/javascript" src="../js/common/licence.js"></script>
+    <script type="text/javascript" src="../js/common/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../js/common/common.js"></script>
+    <script type="text/javascript" src="../js/grid/datatables.min.js" ></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" ></script>
+</head>
+<body>
+
+<div>
+    <table id="wordCloudGrid" class="display" style="width: 100%; height: 100%"  >
+        <thead>
+        <tr>
+            <th></th>
+            <th>키워드</th>
+            <th>문서 수</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+
+    var table;
+    var keyword;
+
+
+    $(document).ready(function(){
+        initWordCloudGrid();
+    });
+
+    function setKeyword(keyword) {
+        this.keyword = keyword
+        requestGet(licence.url + "/wordCloud/v1.0/words?keyword=" + keyword, setData);
+    }
+
+    function setData(data) {
+        table.clear();
+        table.rows.add(data);
+        table.draw();
+
+    }
+
+    function initWordCloudGrid() {
+        table = $('#wordCloudGrid').DataTable({
+            paging:   false,
+            ordering: false,
+            info:     false,
+            searching: false,
+            scrollY:        '100vh',
+            scrollCollapse: true,
+            columns: [
+                {
+                    className:      'a-control',
+                    orderable:      false,
+                    defaultContent: '',
+                    data:           null,
+                    width: '10%'
+                },
+                {data: 'name'},
+                {
+                    data: 'value', "render": function (data, type, row) {
+                        if (type == 'display') {
+                            data = addNumberComma(data) + " 건";
+                        }
+                        return data;
+                    }
+                }
+            ],
+            language: {
+                zeroRecords: "데이터가 존재 하지 않습니다."
+            }
+        });
+
+        $('#wordCloudGrid tbody').on('click', 'td.a-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                row.child.hide();
+                tr.removeClass('shown');
+            } else {
+                var url = licence.url + "/wordCloud/v1.0/words/" + keyword + "/" + encodeURIComponent(row.data().name);
+                requestGet(url, function (resultData) {
+                    row.child( addSubTableHTML(resultData) ).show();
+                    tr.addClass('shown');
+                });
+            }
+        });
+    }
+
+    function addSubTableHTML (data) {
+        var dataHtml = '';
+        $.each(data, function () {
+           dataHtml +='<tr>'
+                    + ' <td>' + this.name + '</td>'
+                    + ' <td>' + addNumberComma(this.value) + ' 건</td>'
+                    + '</tr>';
+
+        });
+        var html = '<table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">'
+            +   '   <thead>'
+            +   '       <tr>'
+            +   '       <th colspan="2" align="left">연관 검색어</th>'
+            +   '       </tr>'
+            +   '       <tr>'
+            +   '           <th>키워드</th>'
+            +   '           <th>문서 수</th>'
+            +   '       </tr>'
+            +   '   </thead>'
+            +   '   <tbody>'
+            +   dataHtml
+            +   '   </tbody>'
+            +   '   </table>';
+        return html;
+    }
+
+</script>
+
+
+
+
+</body>
+</html>

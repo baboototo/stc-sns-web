@@ -1,0 +1,8 @@
+
+td.a-control {
+    background: url('../../images/grid/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.a-control {
+    background: url('../../images/grid/details_close.png') no-repeat center center;
+}

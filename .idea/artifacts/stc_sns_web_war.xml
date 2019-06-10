@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="stc-sns-web:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/stc_sns_web_war</output-path>
+    <root id="archive" name="stc-sns-web_war.war">
+      <element id="artifact" artifact-name="stc-sns-web:war exploded" />
+    </root>
+  </artifact>
+</component>
