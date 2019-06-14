@@ -6,20 +6,21 @@
     <script type="text/javascript" src="../js/common/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="wordCloud.js"></script>
 </head>
-<body>
-<div>
-    <div style="text-align: right;">
-        <select id="option">
-            <option value="옷">옷</option>
-            <option value="그래프">그래프</option>
-            <option value="나무">나무</option>
-            <option value="생각">생각</option>
-            <option value="좋아요">좋아요</option>
-            <option value="통계">통계</option>
-            <option value="퍼즐">퍼즐</option>
-        </select>
+<body style="width: 100vw; height: 100vh; min-height: 450px">
+    <div>
+        <div style="text-align: right; margin-right: 30px;">
+            <select id="option">
+                <option value="기본">기본</option>
+                <option value="옷">옷</option>
+                <option value="그래프">그래프</option>
+                <option value="나무">나무</option>
+                <option value="생각">생각</option>
+                <option value="좋아요">좋아요</option>
+                <option value="통계">통계</option>
+                <option value="퍼즐">퍼즐</option>
+            </select>
+        </div>
+        <div id="wordCloudChart" style="width: 100vw; height: 100vh;"></div>
     </div>
-    <div id="wordCloudChart" style="width: 100%; height: 700px;"></div>
-</div>
 </body>
 </html>

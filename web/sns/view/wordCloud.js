@@ -7,10 +7,14 @@ function initWordCloud() {
     option = {
         series: [ {
             type: 'wordCloud',
-            sizeRange: [10, 100],
+            left: 'center',
+            top: 'center',
+            width: '100%',
+            height: '100%',
+            sizeRange: [10, 60],
             rotationRange: [-90, 90],
             rotationStep: 45,
-            gridSize: 2,
+            gridSize: 10,
             shape: 'pentagon',
             maskImage: maskImage,
             drawOutOfBound: false,
