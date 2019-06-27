@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>STC</title>
+    <link type="text/css" rel="stylesheet" href="../css/grid/datatables.css">
+    <link type="text/css" rel="stylesheet" href="../css/grid/jquery.dataTables.css">
+    <link type="text/css" rel="stylesheet" href="../css/grid/grid.css">
+    <script type="text/javascript" src="../js/common/licence.js"></script>
+    <script type="text/javascript" src="../js/jquery/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../js/common/common.js"></script>
+    <script type="text/javascript" src="../js/grid/datatables.min.js" ></script>
+    <script type="text/javascript" src="../js/grid/jquery.dataTables.js" ></script>
+    <script type="text/javascript" src="originalWebDocumentGrid.js" ></script>
+</head>
+<body>
+<div>
+    <table id="originalWebDocumentGrid" class="display" style="width: 100%;"  >
+        <thead>
+        <tr>
+            <th>채널1</th>
+            <th>채널2</th>
+            <th>채널3</th>
+            <th>제목</th>
+            <th>URL</th>
+            <th>날짜</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        initOriginalWebDocumentGrid();
+        searchOriginalWebDocumentGrid("문화", "20190101", "20190610", "10,20,30");
+    });
+
+</script>
+
+</body>
+</html>

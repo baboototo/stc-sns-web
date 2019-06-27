@@ -4,7 +4,7 @@
 	 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	 <title>STC</title>
 	 <link rel="stylesheet" href="./sns/css/sub.css" />
-	 <script type="text/javascript" src="./sns/js/common/jquery-3.3.1.min.js"></script>
+	 <script type="text/javascript" src="sns/jquery/jquery-3.3.1.min.js"></script>
  <body>
 
 	<div style="width: 1040px; margin: 0px auto;" >
@@ -84,14 +84,14 @@
 			 <div class="data graph-left box">
 				 <h3>채널별추이</h3>
 				 <div class="data-box">
-					 <iframe src="./sns/view/channelChart.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
+					 <iframe src="sns/view/channelCollectionSumPieChart.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
 				 </div><!-- 그래프 영역 -->
 				 <i></i>
 			 </div>
 			 <div class="data graph-right box">
 				 <h3>수집추이</h3>
 				 <div class="data-box">
-					 <iframe src="./sns/view/keywordChart.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
+					 <iframe src="sns/view/hotKeywordCollectionDataAreaZoomChart.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
 				 </div>
 				 <i></i>
 			 </div>
@@ -100,14 +100,14 @@
 			<div class="data graph-left box">
 				<h3>화제어 리스트</h3>
 				<div class="data-box">
-					<iframe src="./sns/view/keywordGrid.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
+					<iframe src="sns/view/hotKeywordGrid.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
 				</div><!-- 그래프 영역 -->
 				<i></i>
 			</div>
 			<div class="data graph-right box">
 				<h3>화제어 채널별 추이</h3>
 				<div class="data-box">
-					<iframe src="./sns/view/keywordChart.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
+					<iframe src="sns/view/hotKeywordCollectionDataAreaZoomChart.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
 				</div>
 				<i></i>
 			</div>
@@ -116,7 +116,7 @@
 			 <div class="data list box">
 				 <h3>리스트</h3>
 				 <div class="data-box">
-					 <iframe src="./sns/view/keywordGrid.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
+					 <iframe src="sns/view/hotKeywordGrid.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
 				 </div><!-- 그래프 영역 -->
 				 <i></i>
 			 </div>
@@ -135,7 +135,7 @@
 					var fContentWindow = $(this).get(0).contentWindow;
 					// $(this).get(0).style.height = fContentWindow.document.body.scrollHeight + "px";
 					// console.log(fContentWindow.document.body.scrollHeight);
-					fContentWindow.setKeyword(keyword);
+					fContentWindow.searchHotKeywordGrid(keyword);
 				});
 			});
 		});

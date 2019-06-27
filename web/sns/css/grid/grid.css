@@ -1,3 +1,5 @@
+@import "datatables.min.css";
+
 
 td.a-control {
     background: url('../../images/grid/details_open.png') no-repeat center center;
@@ -5,4 +7,13 @@ td.a-control {
 }
 tr.shown td.a-control {
     background: url('../../images/grid/details_close.png') no-repeat center center;
+}
+
+table.dataTable tbody th.dt-body-left,
+table.dataTable tbody td.dt-body-left {
+    text-align: left;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

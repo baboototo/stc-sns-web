@@ -2764,7 +2764,7 @@
 							data[ a[i] ] = val;
 						}
 	
-						// The inner call to setData has already traversed through the remainder
+						// The inner call to setHotKeywordGridData has already traversed through the remainder
 						// of the source and has set the data, thus we can exit here
 						return;
 					}

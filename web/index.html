@@ -2,144 +2,163 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>STC</title>
-    <link rel="stylesheet" href="./sns/css/sub.css" />
-    <script type="text/javascript" src="./sns/js/common/jquery-3.3.1.min.js"></script>
+    <title>STC SNS</title>
+    <link rel="stylesheet" href="sns/css/sub.css" />
+    <link rel="stylesheet" href="sns/js/jquery/jquery-ui.min.css" />
+    <link rel="stylesheet" href="sns/css/grid/grid.css" />
+
+    <script type="text/javascript" src="sns/js/jquery/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="sns/js/jquery/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="sns/js/chart/echarts.js"></script>
+    <script type="text/javascript" src="sns/js/grid/datatables.js"></script>
+
+    <script type="text/javascript" src="sns/js/common/licence.js"></script>
+    <script type="text/javascript" src="sns/js/common/api.js"></script>
+    <script type="text/javascript" src="sns/js/common/common.js"></script>
+
+    <script type="text/javascript" src="sns/js/chart/chart.js"></script>
+    <script type="text/javascript" src="sns/js/chart/chartUtil.js"></script>
+    <script type="text/javascript" src="sns/js/chart/chartOptions.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+
+    <script type="text/javascript" src="sns/view/hotKeywordGrid.js"></script>
+    <script type="text/javascript" src="sns/view/originalWebDocumentGrid.js"></script>
+</head>
 <body>
-
-<div style="width: 1040px; margin: 0px auto;" >
-    <div class="sns-search-box">
-        <table class="search-inner-box" summary="SNS분석검색 테이블">
-            <caption class="blind">SNS분석 검색 테이블</caption>
-            <colgroup>
-                <col style="width:12%;">
-                <col style="width:37%;">
-                <col style="width:12%;">
-                <col>
-            </colgroup>
-            <tbody>
-            <tr>
-                <th><label for="">검색키워드</label></th>
-                <td class="keyword">
-                    <input type="text" id="keyword" value="문화">
-                </td>
-                <th><label for="">수집일자</label></th>
-                <td class="date">
-                    <input type="date"><i>~</i><input type="date"><button type="submit" id="btnSend">조회</button>
-                </td>
-            </tr>
-            <tr>
-                <th>채널</th>
-                <td colspan="3">
-                    <ul class="chk-list">
-                        <li>
-                            <div class="input_box_chk type02" style="display:inline-block;">
-                                <input type="checkbox" class="chk_box">
-                                <i></i>
-                            </div>
-                            <label for="">전체</label>
-                        </li>
-                        <li>
-                            <div class="input_box_chk type02" style="display:inline-block;">
-                                <input type="checkbox" class="chk_box">
-                                <i></i>
-                            </div>
-                            <label for="">뉴스</label>
-                        </li>
-                        <li>
-                            <div class="input_box_chk type02" style="display:inline-block;">
-                                <input type="checkbox" class="chk_box">
-                                <i></i>
-                            </div>
-                            <label for="">포털</label>
-                        </li>
-                        <li>
-                            <div class="input_box_chk type02" style="display:inline-block;">
-                                <input type="checkbox" class="chk_box">
-                                <i></i>
-                            </div>
-                            <label for="">SNS</label>
-                        </li>
-                    </ul>
-                    <div class="list-btn">
-                        <button type="button" class="list01 on">버튼1</button><!-- 클릭할때 class="on" 추가하면 버튼아이콘색상이 바뀝니다. -->
-                        <button type="button" class="list02">버튼2</button>
+    <div style="width: 1040px; margin: 0px auto;" >
+        <div class="sns-search-box">
+            <table class="search-inner-box" summary="SNS분석검색 테이블">
+                <caption class="blind">SNS분석 검색 테이블</caption>
+                <colgroup>
+                    <col style="width:12%;">
+                    <col style="width:37%;">
+                    <col style="width:12%;">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th><label for="keyword">검색키워드</label></th>
+                    <td class="keyword">
+                        <input type="text" id="keyword" value="문화">
+                    </td>
+                    <th><label for="startDate">수집일자</label></th>
+                    <td class="date">
+                        <input type="text" id="startDate" readonly >
+                        <i> ~ </i>
+                        <input type="text" id="endDate" readonly >
+                        <button type="submit" id="btnSend">조회</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>채널</th>
+                    <td colspan="3">
+                        <ul class="chk-list">
+                            <li>
+                                <div class="input_box_chk type02" style="display:inline-block;">
+                                    <input type="checkbox" class="chk_box" id="channelAll" value="" checked>
+                                    <i></i>
+                                </div>
+                                <label for="channelAll">전체</label>
+                            </li>
+                            <li>
+                                <div class="input_box_chk type02" style="display:inline-block;">
+                                    <input type="checkbox" class="chk_box" id="channelNews" name="chkChannel" value="10" checked>
+                                    <i></i>
+                                </div>
+                                <label for="channelNews">뉴스</label>
+                            </li>
+                            <li>
+                                <div class="input_box_chk type02" style="display:inline-block;">
+                                    <input type="checkbox" class="chk_box" id="channelPortal" name="chkChannel" value="20" checked>
+                                    <i></i>
+                                </div>
+                                <label for="channelPortal">포털</label>
+                            </li>
+                            <li>
+                                <div class="input_box_chk type02" style="display:inline-block;">
+                                    <input type="checkbox" class="chk_box" id="channelSns" name="chkChannel" value="30" checked>
+                                    <i></i>
+                                </div>
+                                <label for="channelSns">SNS</label>
+                            </li>
+                        </ul>
+                        <div class="list-btn" id="viewType">
+                            <button type="button" class="list01" id="viewTypeList">버튼1</button><!-- 클릭할때 class="on" 추가하면 버튼아이콘색상이 바뀝니다. -->
+                            <button type="button" class="list02 on">버튼2</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <section class="data-area">
+            <article id="data01">
+                <div class="data word-cloud box">
+                    <h3>워드클라우드</h3>
+                    <div class="data-box">
+                        <iframe  src="./sns/view/wordCloud.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    <i></i>
+                </div>
+            </article>
+            <article id="data02">
+                <div class="data graph-left box">
+                    <h3>채널별추이</h3>
+                    <div class="data-box" id="channelCollectionSumPieChart"></div>
+                    <i></i>
+                </div>
+                <div class="data graph-right box">
+                    <h3>수집추이</h3>
+                    <div class="data-box" id="channelCollectionDataAreaZoomChart">
+                    </div>
+                    <i></i>
+                </div>
+            </article>
+            <article id="data03">
+                <div class="data graph-left box">
+                    <h3>화제어 리스트</h3>
+                    <div class="data-box">
+                        <table id="hotKeywordGrid" class="display">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>키워드</th>
+                                <th>문서 수</th>
+                            </tr>
+                            </thead>
+                        </table>
+
+                    </div>
+                    <i></i>
+                </div>
+                <div class="data graph-right box">
+                    <h3>화제어 채널별 추이<span id="hotKeyword"></span> </h3>
+                    <div class="data-box" id="hotKeywordCollectionDataAreaZoomChart"></div>
+                    <i></i>
+                </div>
+            </article>
+            <article id="data04">
+                <div class="data list box">
+                    <h3>리스트</h3>
+                    <div class="data-box">
+                        <table id="originalWebDocumentGrid" class="display" style="width: 100%;"  >
+                            <thead>
+                            <tr>
+                                <th>채널1</th>
+                                <th>채널2</th>
+                                <th>채널3</th>
+                                <th>제목</th>
+                                <th>URL</th>
+                                <th>날짜</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <i></i>
+                </div>
+            </article>
+        </section>
     </div>
-    <section class="data-area">
-        <article id="data01">
-            <div class="data word-cloud box">
-                <h3>워드클라우드</h3>
-                <div class="data-box">
-                    <iframe  src="./sns/view/wordCloud.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
-                </div>
-                <i></i>
-            </div>
-        </article>
-        <article id="data02">
-            <div class="data graph-left box">
-                <h3>채널별추이</h3>
-                <div class="data-box">
-                    <iframe src="./sns/view/channelChart.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
-                </div><!-- 그래프 영역 -->
-                <i></i>
-            </div>
-            <div class="data graph-right box">
-                <h3>수집추이</h3>
-                <div class="data-box">
-                    <iframe src="./sns/view/keywordChart.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
-                </div>
-                <i></i>
-            </div>
-        </article>
-        <article id="data03">
-            <div class="data graph-left box">
-                <h3>화제어 리스트</h3>
-                <div class="data-box">
-                    <iframe src="./sns/view/keywordGrid.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
-                </div><!-- 그래프 영역 -->
-                <i></i>
-            </div>
-            <div class="data graph-right box">
-                <h3>화제어 채널별 추이</h3>
-                <div class="data-box">
-                    <iframe src="./sns/view/keywordChart.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
-                </div>
-                <i></i>
-            </div>
-        </article>
-        <article id="data04">
-            <div class="data list box">
-                <h3>리스트</h3>
-                <div class="data-box">
-                    <iframe src="./sns/view/keywordGrid.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
-                </div><!-- 그래프 영역 -->
-                <i></i>
-            </div>
-        </article>
-    </section>
-</div>
-
-
-<script type="text/javascript">
-
-    $(document).ready(function(){
-        $("#btnSend").click(function(){
-            var keyword = encodeURIComponent($("#keyword").val());
-            $("iframe").each(function(){
-
-                var fContentWindow = $(this).get(0).contentWindow;
-                // $(this).get(0).style.height = fContentWindow.document.body.scrollHeight + "px";
-                // console.log(fContentWindow.document.body.scrollHeight);
-                fContentWindow.setKeyword(keyword);
-            });
-        });
-    });
-
-</script>
 </body>
 </html>

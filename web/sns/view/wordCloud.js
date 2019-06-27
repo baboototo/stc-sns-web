@@ -63,20 +63,20 @@ function setWordCloudImage() {
     maskImage.src = "../images/wordcloud/"+ imageName +".png";
 }
 
-function setKeyword(keyword) {
-    requestGet(licence.url + "/wordCloud/v1.0/words?keyword=" + keyword, setChartData);
+function searchWordCloud(keyword, parameters) {
+    requestGet(Api.wordCloudApi + "/" + keyword + "?" + parameters, setChartData);
 }
 
 
 (function($) {
     "use strict"
     $.getScript("../js/common/licence.js", function() {});
+    $.getScript("../js/common/api.js", function() {});
     $.getScript("../js/common/common.js", function() {});
     $.getScript("../js/wordcloud/echarts.simple.js", function() {
         $.getScript("../js/wordcloud/echarts-wordcloud.min.js", function() {
             initWordCloud();
             initEvent();
-
-        });
+       });
     });
 })(jQuery);

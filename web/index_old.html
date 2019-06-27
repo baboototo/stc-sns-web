@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <title>STC</title>
-    <script type="text/javascript" src="./sns/js/common/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="sns/jquery/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 
@@ -18,19 +18,19 @@
 
     <div>
         <div style="float: left; width: 49%; height: 350px;">
-            <iframe src="./sns/view/channelChart.html" style="width: 100%; height: 100%" scrolling="no" frameborder="0" align="center"></iframe>
+            <iframe src="sns/view/channelCollectionSumPieChart.html" style="width: 100%; height: 100%" scrolling="no" frameborder="0" align="center"></iframe>
         </div>
         <div style="float: left; width: 49%; height: 350px;">
-            <iframe src="./sns/view/channelChart.html" style="width: 100%; height: 100%" scrolling="no" frameborder="0" align="center"></iframe>
+            <iframe src="sns/view/channelCollectionSumPieChart.html" style="width: 100%; height: 100%" scrolling="no" frameborder="0" align="center"></iframe>
         </div>
     </div>
 
     <div>
         <div style="float: left; width: 49%; height: 500px;">
-            <iframe style="display:block; width:100%; height: 100%;" src="sns/view/keywordGrid.html" scrolling="no" frameborder="0" align="center"></iframe>
+            <iframe style="display:block; width:100%; height: 100%;" src="sns/view/hotKeywordGrid.html" scrolling="no" frameborder="0" align="center"></iframe>
         </div>
         <div style="float: left; width: 49%; height: 500px;">
-            <iframe style="display:block; width:100%; height: 100%;" src="sns/view/keywordChart.html" scrolling="no" frameborder="0" align="center"></iframe>
+            <iframe style="display:block; width:100%; height: 100%;" src="sns/view/hotKeywordCollectionDataAreaZoomChart.html" scrolling="no" frameborder="0" align="center"></iframe>
         </div>
     </div>
 </div>
@@ -41,7 +41,7 @@
         $("#btnSend").click(function(){
             var keyword = encodeURIComponent($("#keyword").val());
             $("iframe").each(function(){
-                $(this).get(0).contentWindow.setKeyword(keyword);
+                $(this).get(0).contentWindow.searchHotKeywordGrid(keyword);
             });
         });
     });
