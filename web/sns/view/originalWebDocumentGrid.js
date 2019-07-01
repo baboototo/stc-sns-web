@@ -13,7 +13,7 @@ function setDataOriginalWebDocumentGrid(data) {
 function initOriginalWebDocumentGrid() {
     originalWebDocumentGridTable = $('#originalWebDocumentGrid').removeAttr('width').DataTable({
         language: {
-            url: "/sns/js/grid/language_ko.json"
+            url: "./sns/js/grid/language_ko.json"
         },
         info: true,
         paging: true,

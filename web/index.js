@@ -24,6 +24,12 @@ $(document).ready(function(){
 
 function search() {
 
+    searchKeyword = encodeURIComponent($("#keyword").val());
+    searchOptionParam = "startDate=" + getStartDate()
+        + "&endDate=" + getEndDate()
+        + "&channels=" + getSelectedChannels();
+
+
     // 아이프레임에 있는 워드클라우드 조회
     $("iframe").each(function(){
         var fContentWindow = $(this).get(0).contentWindow;
@@ -83,12 +89,28 @@ function initViewEvent() {
         $(this).addClass("on").siblings().removeClass("on");
 
         if($(".list-btn .list01").hasClass("on")){
-            $("article > div").css({width:"100%",marginLeft:"0"});
+            $("article > div").animate({width:"100%",marginLeft:"0"}, 1000, function(){
+                channelCollectionSumPieChart.resize();           // 채널별추이 차트
+                channelCollectionDataAreaZoomChart.resize();     // 수집추이 차트
+                hotKeywordCollectionDataAreaZoomChart.resize();  // 화제어 채널별 추이 차트
+            });
             $(".graph-right").css({marginTop:"40px"});
         }else{
-            $(".graph-left, .graph-right").animate({width:"47.8%"});
+            $(".graph-left, .graph-right").animate({width:"47.8%"}, 1000, function(){
+                channelCollectionSumPieChart.resize();           // 채널별추이 차트
+                channelCollectionDataAreaZoomChart.resize();     // 수집추이 차트
+                hotKeywordCollectionDataAreaZoomChart.resize();  // 화제어 채널별 추이 차트
+            });
             $(".graph-right").css({marginTop:"0",marginLeft:"40px"});
+
         }
+
+        // setTimeout(function() {
+        //     channelCollectionSumPieChart.resize();           // 채널별추이 차트
+        //     channelCollectionDataAreaZoomChart.resize();     // 수집추이 차트
+        //     hotKeywordCollectionDataAreaZoomChart.resize();  // 화제어 채널별 추이 차트
+        // }, 2000);
+
     });
 
     // 채널 체크박스 선택 이벤트
@@ -120,6 +142,27 @@ function initViewEvent() {
         }
 
         search();
+    });
+
+    $("#siteOption").change(function(){
+        var siteCode = $("#siteOption option:selected").val();
+        $("iframe").each(function(){
+            var fContentWindow = $(this).get(0).contentWindow;
+            fContentWindow.searchWordCloud(searchKeyword, searchOptionParam);
+
+            if (siteCode == "1") {
+                fContentWindow.licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJiYWJvb3RvdG8iLCJMSUNFTlNFX1MiOjE1NTkxNDIwMDAsIkxJQ0VOU0VfRSI6MTU5MDY3ODAwMH0.i9U4W-neXAMREwck4_XPpCqrxWC48Wd4Fgfwn0L0VJ0";
+            } else {
+                fContentWindow.licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJraXNkIiwiTElDRU5TRV9TIjoxNTYxNTYxMjAwLCJMSUNFTlNFX0UiOjE1OTMwOTcyMDB9.4rZev4nsZzaJDRzvPSF_syybpYOALN676JpbPfjIpMc"
+            }
+
+        });
+
+        if (siteCode == "1") {
+            licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJiYWJvb3RvdG8iLCJMSUNFTlNFX1MiOjE1NTkxNDIwMDAsIkxJQ0VOU0VfRSI6MTU5MDY3ODAwMH0.i9U4W-neXAMREwck4_XPpCqrxWC48Wd4Fgfwn0L0VJ0";
+        } else {
+            licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJraXNkIiwiTElDRU5TRV9TIjoxNTYxNTYxMjAwLCJMSUNFTlNFX0UiOjE1OTMwOTcyMDB9.4rZev4nsZzaJDRzvPSF_syybpYOALN676JpbPfjIpMc"
+        }
     });
 }
 

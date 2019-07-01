@@ -21,7 +21,7 @@ function setHotKeywordGridData(data) {
 function initHotKeywordGrid() {
     hotKeywordGridTable = $('#hotKeywordGrid').DataTable({
         language: {
-            url: "/sns/js/grid/language_ko.json"
+            url: "./sns/js/grid/language_ko.json"
         },
         info: false,
         paging: false,
@@ -29,6 +29,7 @@ function initHotKeywordGrid() {
         searching: false,
         scrollY: '400',
         scrollCollapse: true,
+        autoWidth: true,
         columns: [
             {
                 className:      'a-control',
@@ -49,45 +50,35 @@ function initHotKeywordGrid() {
         ],
         columnDefs: [
             {
-                targets: 0, width: '10%', className: 'dt-body-center', orderable: true
+                targets: 1, className: 'dt-body-center'
             },
             {
-                targets: 1, width: '45%', className: 'dt-body-center'
-            },
-            {
-                targets: 2, width: '45%', className: 'dt-body-center'
+                targets: 2, className: 'dt-body-center'
             },
         ]
     });
 
-    $('#hotKeywordGrid tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-        }else {
-            hotKeywordGridTable.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-
-            sendEventListener(hotKeywordGridTable.row( this ).data().name);
-        }
-    } );
-
-    $('#hotKeywordGrid tbody').on('click', 'td.a-control', function () {
+    $('#hotKeywordGrid tbody').on('click', 'td', function () {
         var tr = $(this).closest('tr');
-        var row = hotKeywordGridTable.row(tr);
 
-        if (row.child.isShown()) {
-            row.child.hide();
-            tr.removeClass('shown');
+        if ($(this).hasClass("a-control")) {
+                var row = hotKeywordGridTable.row(tr);
+
+                if (row.child.isShown()) {
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    var url = Api.wordCloudApi + "/" + this.keyword + "/" + encodeURIComponent(row.data().name) + "?" + parameters;
+                    requestGet(url, function (resultData) {
+                        row.child( addSubTableHTML(resultData) ).show();
+                        tr.addClass('shown');
+                    });
+                }
         } else {
-            var parameters = "?startDate=" + startDate + "&endDate=" + endDate + "&channels=" + channels;
-            var url = "/wordCloud/v1.0/words/" + keyword + "/" + encodeURIComponent(row.data().name) + parameters;
-
-            requestGet(url, function (resultData) {
-                row.child( addSubTableHTML(resultData) ).show();
-                tr.addClass('shown');
-            });
+            sendEventListener(hotKeywordGridTable.row( tr ).data().name);
         }
     });
+
 }
 
 function addSubTableHTML (data) {

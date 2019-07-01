@@ -135,10 +135,17 @@ table{border-spacing:0px;border-collapse:collapse}
 .list-btn button{width:32px;height:32px;text-indent: -9999px;background-repeat: no-repeat;background-color: #fff;transition: all 0.5s ease-out;}
 .list-btn button:focus{outline: none;}
 
-#option{
-	border: 1px solid #ddd;
-	width: 100px;
-	height: 30px;
+.select-option {
+	border: 1px solid #ccc;
+	width: 150px;
+	height: 32px;
+	padding-left:11px;
 	border-radius: 5px;
-	dir:rtl;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	background:url("../images/slideDown.png") no-repeat 98% 50%;
+}
+.select-option::-ms-expand{
+	display:none;
 }

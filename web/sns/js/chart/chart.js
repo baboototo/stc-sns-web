@@ -24,7 +24,7 @@ var ChartPie = function (charPieId) {
         legend: {
             orient : 'horizontal',
             x : 'center',
-            y: 'top'
+            y: 'bottom'
         },
         toolbox: {
             show : true,
@@ -86,6 +86,9 @@ var ChartPie = function (charPieId) {
 
     return this;
 };
+ChartPie.prototype.resize = function () {
+    this._chartDom.resize();
+};
 ChartPie.prototype.setOptions = function (options) {
     this._chartOptions = options;
 };
@@ -96,7 +99,6 @@ ChartPie.prototype.searchKeyword = function (keyword, parameters) {
     chartDom.showLoading(this._chartLoaing);
 
     function apiCallBackFunction(data) {
-
         if (data) {
             var channelSum = chartValueSum(data["series"]);
             chartOptions["title"]["text"]       = addNumberComma(channelSum) + "건";
@@ -108,11 +110,15 @@ ChartPie.prototype.searchKeyword = function (keyword, parameters) {
         if (chartOptions && typeof chartOptions === "object") {
             chartDom.hideLoading();
             chartDom.setOption(chartOptions, true);
+
             window.onresize = function () {
                 chartDom.resize();
             }
+            chartDom.resize();
         }
+        return chartOptions;
     }
+
     requestGet(Api.channelCollectionSumApi + "/" + keyword + "?" + parameters, apiCallBackFunction);
 };
 
@@ -128,7 +134,7 @@ var ChartDataAreaZoom = function (chartDataAreaZoomId) {
         legend: {
             orient : 'horizontal',
             x : 'center',
-            y: 'top'
+            y: 'bottom'
         },
         toolbox: {
             show : true,
@@ -168,8 +174,15 @@ var ChartDataAreaZoom = function (chartDataAreaZoomId) {
         dataZoom : {
             show : true,
             realtime : true,
-            start : 20,
-            end : 80
+            y: 380,
+            start : 40,
+            end : 100
+        },
+        grid : {
+            x: 40,
+            y: 60,
+            x2: 40,
+            y2: 100
         },
         xAxis : [
             {
@@ -185,6 +198,9 @@ var ChartDataAreaZoom = function (chartDataAreaZoomId) {
     };
 
     return this;
+};
+ChartDataAreaZoom.prototype.resize = function () {
+    this._chartDom.resize();
 };
 ChartDataAreaZoom.prototype.setOptions = function (options) {
     this._chartOptions = options;

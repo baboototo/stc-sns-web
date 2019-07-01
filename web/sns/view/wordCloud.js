@@ -1,4 +1,10 @@
 
+$(document).ready(function(){
+    initWordCloud();
+    initEvent();
+});
+
+
 var chart, option, maskImage;
 
 function initWordCloud() {
@@ -11,15 +17,17 @@ function initWordCloud() {
             top: 'center',
             width: '100%',
             height: '100%',
-            sizeRange: [10, 60],
+            sizeRange: [15, 100],
             rotationRange: [-90, 90],
             rotationStep: 45,
-            gridSize: 10,
+            gridSize: 5,
             shape: 'pentagon',
             maskImage: maskImage,
             drawOutOfBound: false,
             textStyle: {
                 normal: {
+                    fontFamily: 'sans-serif',
+                    // fontWeight: 'bold',
                     color: function () {
                         return 'rgb(' + [
                             Math.round(Math.random() * 160),
@@ -41,7 +49,7 @@ function initWordCloud() {
 }
 
 function initEvent() {
-    $("#option").change(function(){
+    $("#wordCloudOption").change(function(){
         setWordCloudImage();
     });
 }
@@ -59,24 +67,10 @@ function setChartData(data) {
 
 
 function setWordCloudImage() {
-    var imageName = $("#option option:selected").val();
+    var imageName = $("#wordCloudOption option:selected").val();
     maskImage.src = "../images/wordcloud/"+ imageName +".png";
 }
 
 function searchWordCloud(keyword, parameters) {
     requestGet(Api.wordCloudApi + "/" + keyword + "?" + parameters, setChartData);
 }
-
-
-(function($) {
-    "use strict"
-    $.getScript("../js/common/licence.js", function() {});
-    $.getScript("../js/common/api.js", function() {});
-    $.getScript("../js/common/common.js", function() {});
-    $.getScript("../js/wordcloud/echarts.simple.js", function() {
-        $.getScript("../js/wordcloud/echarts-wordcloud.min.js", function() {
-            initWordCloud();
-            initEvent();
-       });
-    });
-})(jQuery);

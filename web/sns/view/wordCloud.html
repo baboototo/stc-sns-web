@@ -3,29 +3,22 @@
 <head>
     <meta charset="utf-8">
     <title>STC</title>
+    <link rel="stylesheet" href="../css/sub.css" />
     <script type="text/javascript" src="../js/jquery/jquery-1.12.4.min.js"></script>
+
+    <script type="text/javascript" src="../js/common/licence.js"></script>
+    <script type="text/javascript" src="../js/common/api.js"></script>
+    <script type="text/javascript" src="../js/common/common.js"></script>
+
+    <script type="text/javascript" src="../js/wordcloud/echarts.simple.js"></script>
+    <script type="text/javascript" src="../js/wordcloud/echarts-wordcloud.min.js"></script>
+
     <script type="text/javascript" src="wordCloud.js"></script>
-    <style>
-        #option{
-            border: 1px solid #ccc;
-            width: 150px;
-            height: 32px;
-            padding-left:11px;
-            border-radius: 5px;
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            appearance: none;
-            background:url("../images/slideDown.png") no-repeat 98% 50%;
-        }
-        #option::-ms-expand{
-            display:none;
-        }
-    </style>
 </head>
 <body style="width: 100vw; height: 100vh; min-height: 450px">
     <div>
         <div style="text-align: right; margin-right: 30px;">
-            <select id="option">
+            <select id="wordCloudOption" class="select-option">
                 <option value="기본">기본</option>
                 <option value="옷">옷</option>
                 <option value="그래프">그래프</option>
