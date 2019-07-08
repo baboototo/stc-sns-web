@@ -6,3 +6,7 @@ function chartValueSum(chartData) {
     }
     return valueSum;
 }
+
+function chartValueNumberComma(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

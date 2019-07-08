@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -29,7 +30,7 @@
     <div style="width: 1040px; margin: 0px auto;" >
         <div class="sns-search-box">
             <table class="search-inner-box" summary="SNS분석검색 테이블">
-                <caption class="blind">SNS분석 검색 테이블</caption>
+                <caption class="font_blind">SNS분석 검색 테이블</caption>
                 <colgroup>
                     <col style="width:12%;">
                     <col style="width:37%;">
@@ -38,10 +39,10 @@
                 </colgroup>
                 <tbody>
                 <tr>
-                    <th>Site</th>
+                    <th scope="row"><label for="siteOption">Site</label></th>
                     <td colspan="3">
                         <div>
-                            <select id="siteOption" class="select-option">
+                            <select id="siteOption" class="select-option site">
                                 <option value="1">문화셈터</option>
                                 <option value="2">미디어통계</option>
                             </select>
@@ -49,20 +50,21 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><label for="keyword">검색키워드</label></th>
+                    <th scope="row"><label for="keyword">검색키워드</label></th>
                     <td class="keyword">
                         <input type="text" id="keyword" value="문화">
                     </td>
-                    <th><label for="startDate">수집일자</label></th>
+                    <th scope="row"><label for="startDate">수집일자</label></th>
                     <td class="date">
                         <input type="text" id="startDate" readonly >
                         <i> ~ </i>
+                        <label for="endDate" class="font_blind">수집종료일자</label>
                         <input type="text" id="endDate" readonly >
                         <button type="submit" id="btnSend">조회</button>
                     </td>
                 </tr>
                 <tr>
-                    <th>채널</th>
+                    <th scope="row">채널</th>
                     <td colspan="3">
                         <ul class="chk-list">
                             <li>
@@ -107,8 +109,8 @@
             <article id="data01">
                 <div class="data word-cloud box">
                     <h3>워드클라우드</h3>
-                    <div class="data-box">
-                        <iframe  src="./sns/view/wordCloud.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center"></iframe>
+                    <div class="data-box chart_type">
+                        <iframe id="wordCloudIframe" src="./sns/view/wordCloud.html" style="width: 100%; height: 100%;" scrolling="no" frameborder="0" align="center" title="워드클라우드"></iframe>
                     </div>
                     <i></i>
                 </div>
@@ -116,14 +118,14 @@
             <article id="data02">
                 <div class="data graph-left box">
                     <h3>채널별추이</h3>
-                    <div class="data-box" id="channelCollectionSumPieChart">
+                    <div class="data-box chart_type" id="channelCollectionSumPieChart">
                     </div>
                     <i></i>
                 </div>
                 <div class="data graph-right box">
                     <h3>수집추이</h3>
-                    <div class="data-box">
-                        <div id="channelCollectionDataAreaZoomChart" style="width: 100%; height: 100%;"></div>
+                    <div class="data-box chart_type">
+                        <div id="channelCollectionDataAreaZoomChart" style="width: 100%; height:100%;"></div>
                     </div>
                     <i></i>
                 </div>
@@ -131,13 +133,14 @@
             <article id="data03">
                 <div class="data graph-left box">
                     <h3>화제어 리스트</h3>
-                    <div class="data-box">
-                        <table id="hotKeywordGrid" class="display" style="width: 100%; height: 100%;">
+                    <div class="data-box grid_type">
+                        <table id="hotKeywordGrid" class="display" summary="화제어리스트 데이터입니다.">
+                            <caption class="font_blind">화제어 리스트</caption>
                             <thead>
                             <tr>
-                                <th></th>
-                                <th>키워드</th>
-                                <th>문서 수</th>
+                                <th scope="col"></th>
+                                <th scope="col">키워드</th>
+                                <th scope="col">문서수</th>
                             </tr>
                             </thead>
                         </table>
@@ -146,8 +149,8 @@
                 </div>
                 <div class="data graph-right box">
                     <h3>화제어 채널별 추이<span id="hotKeyword"></span> </h3>
-                    <div class="data-box">
-                        <div id="hotKeywordCollectionDataAreaZoomChart" style="width: 100%; height: 100%;"></div>
+                    <div class="data-box chart_type">
+                        <div id="hotKeywordCollectionDataAreaZoomChart" style="width: 100%; height:100%;"></div>
                     </div>
                     <i></i>
                 </div>
@@ -155,16 +158,25 @@
             <article id="data04">
                 <div class="data list box">
                     <h3>리스트</h3>
-                    <div class="data-box">
-                        <table id="originalWebDocumentGrid" class="display" style="width: 100%; height: 100%;">
+                    <div class="data-box grid_type">
+                        <table id="originalWebDocumentGrid" class="display"summary="원문데이터목록 데이터입니다.">
+                            <caption class="font_blind">원문데이터목록</caption>
+                            <colgroup>
+                                <col style="width:10%"/>
+                                <col style="width:15%"/>
+                                <col style="width:15%"/>
+                                <col style="width:35%"/>
+                                <col style="width:15%"/>
+                                <col style="width:10%"/>
+                            </colgroup>
                             <thead>
                             <tr>
-                                <th>채널1</th>
-                                <th>채널2</th>
-                                <th>채널3</th>
-                                <th>제목</th>
-                                <th>URL</th>
-                                <th>날짜</th>
+                                <th scope="col">채널1</th>
+                                <th scope="col">채널2</th>
+                                <th scope="col">채널3</th>
+                                <th scope="col">제목</th>
+                                <th scope="col">URL</th>
+                                <th scope="col">날짜</th>
                             </tr>
                             </thead>
                         </table>
@@ -173,6 +185,9 @@
                 </div>
             </article>
         </section>
-    </div>
+        </div>
+    <footer style="background:#666;height:100px;line-height:100px;text-align:center;margin-top:50px;font-size:30px;color:#fff;">
+        Footer Area
+    </footer>
 </body>
 </html>

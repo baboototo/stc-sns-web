@@ -5,7 +5,7 @@ $(document).ready(function(){
 });
 
 
-var chart, option, maskImage;
+var chart, option, maskImage, addEventSearchEnd;
 
 function initWordCloud() {
     maskImage = new Image();
@@ -42,10 +42,6 @@ function initWordCloud() {
             }
         } ]
     };
-
-    window.onresize = function () {
-        chart.resize();
-    }
 }
 
 function initEvent() {
@@ -56,13 +52,24 @@ function initEvent() {
 
 
 function setChartData(data) {
-    maskImage.onload = function () {
-        option.series[0].maskImage
-        option.series[0].data = data;
-        chart.setOption(option);
+
+    if (addEventSearchEnd) {
+        addEventSearchEnd(data.length);
     }
 
-    setWordCloudImage();
+    if (data && data.length > 0) {
+        maskImage.onload = function () {
+            option.series[0].maskImage
+            option.series[0].data = data;
+            chart.setOption(option);
+        };
+
+        setWordCloudImage();
+
+        window.onresize = function () {
+            chart.resize();
+        }
+    }
 }
 
 
@@ -71,6 +78,8 @@ function setWordCloudImage() {
     maskImage.src = "../images/wordcloud/"+ imageName +".png";
 }
 
-function searchWordCloud(keyword, parameters) {
-    requestGet(Api.wordCloudApi + "/" + keyword + "?" + parameters, setChartData);
+function searchWordCloud(apiUrl, addEventSearchEnd) {
+    this.addEventSearchEnd = addEventSearchEnd;
+    chart.clear();
+    requestGet(apiUrl, setChartData);
 }

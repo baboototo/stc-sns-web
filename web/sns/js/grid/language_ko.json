@@ -5,10 +5,10 @@
   "sInfoFiltered":   "(총 _MAX_ 개)",
   "sInfoPostFix":    "",
   "sInfoThousands":  ",",
-  "sLengthMenu":     "페이지당 줄수 _MENU_",
+  "sLengthMenu":     "_MENU_",
   "sLoadingRecords": "읽는중...",
   "sProcessing":     "처리중...",
-  "sSearch":         "검색:",
+  "sSearch":         "",
   "sZeroRecords":    "검색 결과가 없습니다",
   "oPaginate": {
     "sFirst":    "처음",

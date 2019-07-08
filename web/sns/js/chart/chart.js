@@ -28,6 +28,7 @@ var ChartPie = function (charPieId) {
         },
         toolbox: {
             show : true,
+            padding:[10, 40, 0, 0],
             itemSize: 15,
             itemGap: 10,
             feature : {
@@ -44,7 +45,6 @@ var ChartPie = function (charPieId) {
                             x: '25%',
                             width: '50%',
                             funnelAlign: 'center'
-                            // ,max: channelSum
                         }
                     }
                 },
@@ -61,7 +61,7 @@ var ChartPie = function (charPieId) {
         series : [
             {
                 type:'pie',
-                radius : ['40%', '70%'],
+                radius : ['30%', '60%'],
                 roseType : 'radius',
                 itemStyle : {
                     normal : {
@@ -69,9 +69,9 @@ var ChartPie = function (charPieId) {
                             show : true,
                             formatter: function (dataSetObj) {
                                 if (dataSetObj.series.type == 'pie') {
-                                    return dataSetObj.name + "\n" + dataSetObj.data.value + "건\n("+ dataSetObj.percent + "%)";
+                                    return dataSetObj.name + "\n" + chartValueNumberComma(dataSetObj.data.value) + "건\n("+ dataSetObj.percent + "%)";
                                 }
-                                return dataSetObj.name + " - " + dataSetObj.data.value + "건";
+                                return dataSetObj.name + " - " + chartValueNumberComma(dataSetObj.data.value) + "건";
                             }
                         },
                         labelLine : {
@@ -84,18 +84,30 @@ var ChartPie = function (charPieId) {
         noDataLoadingOption: ChartNoDataLoadingOption()
     };
 
+    this._addEventChartNoData;
+
     return this;
 };
 ChartPie.prototype.resize = function () {
     this._chartDom.resize();
 };
+ChartPie.prototype.clear = function () {
+    this._chartDom.clear();
+};
 ChartPie.prototype.setOptions = function (options) {
     this._chartOptions = options;
 };
-ChartPie.prototype.searchKeyword = function (keyword, parameters) {
+ChartPie.prototype.addEventChartNoData = function (noDataCallBackFunction) {
+    this._addEventChartNoData = noDataCallBackFunction;
+};
+
+ChartPie.prototype.searchKeyword = function (apiUrl) {
+    var viewId = this._id;
     var chartDom = this._chartDom;
     var chartOptions = this._chartOptions;
+    var addEventChartNoData = this._addEventChartNoData;
 
+    chartDom.clear();
     chartDom.showLoading(this._chartLoaing);
 
     function apiCallBackFunction(data) {
@@ -105,6 +117,10 @@ ChartPie.prototype.searchKeyword = function (keyword, parameters) {
             chartOptions["legend"]["data"]      = data["legend"];
             chartOptions["toolbox"]["feature"]["magicType"]["option"]["funnel"]["max"] = channelSum;
             chartOptions["series"][0]["data"]      = data["series"];
+
+            if (data["legend"].length == 0) {
+                if(addEventChartNoData) { addEventChartNoData(); }
+            }
         }
 
         if (chartOptions && typeof chartOptions === "object") {
@@ -112,14 +128,14 @@ ChartPie.prototype.searchKeyword = function (keyword, parameters) {
             chartDom.setOption(chartOptions, true);
 
             window.onresize = function () {
+                console.log("onresize");
                 chartDom.resize();
             }
-            chartDom.resize();
         }
         return chartOptions;
     }
 
-    requestGet(Api.channelCollectionSumApi + "/" + keyword + "?" + parameters, apiCallBackFunction);
+    requestGet(apiUrl, apiCallBackFunction);
 };
 
 var ChartDataAreaZoom = function (chartDataAreaZoomId) {
@@ -134,10 +150,11 @@ var ChartDataAreaZoom = function (chartDataAreaZoomId) {
         legend: {
             orient : 'horizontal',
             x : 'center',
-            y: 'bottom'
+            y: 440
         },
         toolbox: {
             show : true,
+            padding:[10, 40, 0, 0],
             itemSize: 15,
             itemGap: 10,
             orient: 'horizontal',
@@ -174,7 +191,7 @@ var ChartDataAreaZoom = function (chartDataAreaZoomId) {
         dataZoom : {
             show : true,
             realtime : true,
-            y: 380,
+            y: 390,
             start : 40,
             end : 100
         },
@@ -196,19 +213,27 @@ var ChartDataAreaZoom = function (chartDataAreaZoomId) {
             }
         ]
     };
-
+    this._addEventChartNoData;
     return this;
 };
 ChartDataAreaZoom.prototype.resize = function () {
     this._chartDom.resize();
 };
+ChartDataAreaZoom.prototype.clear = function () {
+    this._chartDom.clear();
+};
 ChartDataAreaZoom.prototype.setOptions = function (options) {
     this._chartOptions = options;
 };
-ChartDataAreaZoom.prototype.searchKeyword = function (keyword, parameters) {
+ChartDataAreaZoom.prototype.addEventChartNoData = function (noDataCallBackFunction) {
+    this._addEventChartNoData = noDataCallBackFunction;
+};
+ChartDataAreaZoom.prototype.searchKeyword = function (apiUrl) {
     var chartDataAreaZoom = this._chartDom;
     var chartDataAreaZoomOptions = this._chartOptions;
+    var addEventChartNoData = this._addEventChartNoData;
 
+    chartDataAreaZoom.clear();
     chartDataAreaZoom.showLoading(this._chartLoaing);
 
     function apiCallBackFunction(data) {
@@ -216,6 +241,10 @@ ChartDataAreaZoom.prototype.searchKeyword = function (keyword, parameters) {
             chartDataAreaZoomOptions["legend"]["data"]    = data["legend"];
             chartDataAreaZoomOptions["xAxis"][0]["data"]  = data["xaxis"];
             chartDataAreaZoomOptions["series"]            = data["series"];
+
+            if (data["legend"].length == 0) {
+                if(addEventChartNoData) { addEventChartNoData(); }
+            }
         }
 
         if (chartDataAreaZoomOptions && typeof chartDataAreaZoomOptions === "object") {
@@ -226,7 +255,7 @@ ChartDataAreaZoom.prototype.searchKeyword = function (keyword, parameters) {
             }
         }
     }
-    requestGet(Api.channelCollectionApi + "/" + keyword + "?" + parameters, apiCallBackFunction);
+    requestGet(apiUrl, apiCallBackFunction);
 };
 
 

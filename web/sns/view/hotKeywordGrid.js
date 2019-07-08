@@ -1,21 +1,26 @@
 var hotKeywordGridTable;
-var keyword, parameters;
+var hotKewordApiPathVariable;
 
-function searchHotKeywordGrid(keyword, parameters) {
-    this.keyword = keyword;
-    this.parameters = parameters;
+function searchHotKeywordGrid(apiUrl, apiPathVariable) {
+    hotKewordApiPathVariable = $.extend({}, apiPathVariable);
 
-    requestGet(Api.wordCloudApi + "/" + this.keyword + "?" + this.parameters, setHotKeywordGridData);
+    requestGet(apiUrl, setHotKeywordGrid);
 }
 
-function setHotKeywordGridData(data) {
+function clearHotKeywordGrid() {
+    hotKeywordGridTable.clear();
+    hotKeywordGridTable.draw();
+
+    sendEventListener(hotKeywordGridTable.row(":eq(0)").data());
+}
+
+function setHotKeywordGrid(data) {
     hotKeywordGridTable.clear();
     hotKeywordGridTable.rows.add(data);
     hotKeywordGridTable.draw();
+    $('.dataTables_scrollBody #hotKeywordGrid').prepend('<caption class="font_blind">body화제어리스트</caption>');
 
-    if (data.length > 0) {
-        sendEventListener(hotKeywordGridTable.row(":eq(0)").data().name);
-    }
+    sendEventListener(hotKeywordGridTable.row(":eq(0)").data());
 }
 
 function initHotKeywordGrid() {
@@ -27,7 +32,7 @@ function initHotKeywordGrid() {
         paging: false,
         order: [],
         searching: false,
-        scrollY: '400',
+        scrollY: '416',
         scrollCollapse: true,
         autoWidth: true,
         columns: [
@@ -68,36 +73,40 @@ function initHotKeywordGrid() {
                     row.child.hide();
                     tr.removeClass('shown');
                 } else {
-                    var url = Api.wordCloudApi + "/" + this.keyword + "/" + encodeURIComponent(row.data().name) + "?" + parameters;
-                    requestGet(url, function (resultData) {
+
+                    hotKewordApiPathVariable["subKeyword"] = encodeURIComponent(row.data().name);
+
+                    var apiUrl = requestApiUrl(Api.wordCloudSubKeywordApi, hotKewordApiPathVariable);
+
+                    requestGet(apiUrl, function (resultData) {
                         row.child( addSubTableHTML(resultData) ).show();
                         tr.addClass('shown');
                     });
                 }
-        } else {
-            sendEventListener(hotKeywordGridTable.row( tr ).data().name);
+        } else if ($(this).hasClass("dt-body-center")) {
+            sendEventListener(hotKeywordGridTable.row( tr ).data());
         }
     });
-
 }
 
 function addSubTableHTML (data) {
     var dataHtml = '';
     $.each(data, function () {
         dataHtml +='<tr>'
-            + ' <td>' + this.name + '</td>'
-            + ' <td>' + addNumberComma(this.value) + ' 건</td>'
+            + ' <td style="text-align:center">' + this.name + '</td>'
+            + ' <td style="text-align:center">' + addNumberComma(this.value) + ' 건</td>'
             + '</tr>';
 
     });
-    var html = '<table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">'
+    var html = '<table cellpadding="0" cellspacing="0" border="0" style="width: 100%; summary="연관검색어 데이터입니다.">'
+        +   '   <caption class="font_blind">연관검색어목록</caption>'
         +   '   <thead>'
         +   '       <tr>'
         +   '       <th colspan="2" align="left">연관 검색어</th>'
         +   '       </tr>'
         +   '       <tr>'
-        +   '           <th>키워드</th>'
-        +   '           <th>문서 수</th>'
+        +   '           <th scope="col">키워드</th>'
+        +   '           <th scope="col">문서수</th>'
         +   '       </tr>'
         +   '   </thead>'
         +   '   <tbody>'
@@ -107,6 +116,6 @@ function addSubTableHTML (data) {
     return html;
 }
 
-function sendEventListener(value) {
-    callSendEventListener("hotKeywordCollectionDataAreaZoomChart", value);
+function sendEventListener(valueObj) {
+    callSendEventListener("hotKeywordCollectionDataAreaZoomChart", valueObj);
 }

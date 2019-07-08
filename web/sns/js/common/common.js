@@ -1,3 +1,32 @@
+
+
+
+function requestApiUrl(apiUrl, apiPathVariable) {
+
+    var parametersArray = new Array();
+
+    var pathVariable = "";
+    for( var pathVariableKey in apiPathVariable ) {
+
+        pathVariable = "{"+ pathVariableKey +"}";
+
+        if (apiUrl.indexOf(pathVariable) == -1) {
+            if (apiPathVariable[pathVariableKey]) {
+                parametersArray.push(pathVariableKey + "=" + apiPathVariable[pathVariableKey]);
+            }
+        } else {
+            apiUrl = apiUrl.replace(pathVariable, apiPathVariable[pathVariableKey])
+        }
+    }
+
+    if (parametersArray.length > 0) {
+        apiUrl = apiUrl + "?" + parametersArray.join("&");
+    }
+    return apiUrl;
+}
+
+
+
 function requestGet(url, callBackFun) {
     var head = {};
     head["Authorization"] = licence.licence;
@@ -27,8 +56,6 @@ function addNumberComma(number) {
 function addDateFormat(dateStr, pattern) {
     return dateStr.replace(/(\d{4})(\d{2})(\d{2})/g, '$1'+ pattern +'$2'+ pattern +'$3');
 }
-
-
 
 function replaceAll(str, searchStr, replaceStr) {
     return str.split(searchStr).join(replaceStr);

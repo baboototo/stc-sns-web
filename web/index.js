@@ -1,5 +1,5 @@
-var searchKeyword;                          // 검색키워드
-var searchOptionParam;                      // 검색 조건 파라미터
+var apiPathVariable;                        // 검색 조회 파라미터
+var selectedChannels = new Array();         // 선택된 채널 정보
 var channelCollectionSumPieChart;           // 채널별추이 차트
 var channelCollectionDataAreaZoomChart;     // 수집추이 차트
 var hotKeywordCollectionDataAreaZoomChart;  // 화제어 채널별 추이 차트
@@ -22,31 +22,53 @@ $(document).ready(function(){
     });
 });
 
-function search() {
 
-    searchKeyword = encodeURIComponent($("#keyword").val());
-    searchOptionParam = "startDate=" + getStartDate()
-        + "&endDate=" + getEndDate()
-        + "&channels=" + getSelectedChannels();
+function cleanView() {
+    clearHotKeywordGrid();
+    clearDataOriginalWebDocumentGrid();
 
+    channelCollectionSumPieChart.clear();
+    channelCollectionDataAreaZoomChart.clear();
+}
 
-    // 아이프레임에 있는 워드클라우드 조회
-    $("iframe").each(function(){
-        var fContentWindow = $(this).get(0).contentWindow;
-        fContentWindow.searchWordCloud(searchKeyword, searchOptionParam);
-    });
+function searchWordCloud() {
 
-    // 채널별추이 조회
-    channelCollectionSumPieChart.searchKeyword(searchKeyword, searchOptionParam);
+    // 조회 조건값 설정
+    apiPathVariable = {
+        keyword: encodeURIComponent($("#keyword").val()),
+        chnlCd: "",
+        channels: selectedChannels.join(","),
+        startDate: getStartDate(),
+        endDate: getEndDate()
+    };
 
-    // 수집추이 조회
-    channelCollectionDataAreaZoomChart.searchKeyword(searchKeyword, searchOptionParam);
+    // 선택된 채널에 따른 조회 조건값 변경
+    if (selectedChannels.length == 1) {
+        delete apiPathVariable.channels;
+        apiPathVariable.chnlCd = selectedChannels[0];
+    } else {
+        delete apiPathVariable.chnlCd;
+    }
 
-    // 화제어 조회
-    searchHotKeywordGrid(searchKeyword, searchOptionParam);
+    // 워드클라우드 조회
+    $("#wordCloudIframe").get(0).contentWindow.searchWordCloud(requestApiUrl(Api.wordCloudApi, apiPathVariable), searchChartGrid);
+}
 
-    // 원문 조회
-    searchOriginalWebDocumentGrid(searchKeyword, searchOptionParam);
+function searchChartGrid(searchWordCloudCount) {
+    if (searchWordCloudCount > 0) {
+        // 화제어 키워드 / 원문 리스트 Grid 조회
+        searchHotKeywordGrid(requestApiUrl(Api.wordCloudApi, apiPathVariable), apiPathVariable);
+        searchOriginalWebDocumentGrid(requestApiUrl(Api.originalWebDocumentApi, apiPathVariable), apiPathVariable);
+
+        // 채널별추이 / 수집추이 / 화재어 채널별 추이 조회
+        if (selectedChannels.length == 1) {
+            channelCollectionSumPieChart.searchKeyword(requestApiUrl(Api.channelDetailCollectionSumApi, apiPathVariable));
+            channelCollectionDataAreaZoomChart.searchKeyword(requestApiUrl(Api.channelDetailCollectionApi, apiPathVariable));
+        } else {
+            channelCollectionSumPieChart.searchKeyword(requestApiUrl(Api.channelCollectionSumApi, apiPathVariable));
+            channelCollectionDataAreaZoomChart.searchKeyword(requestApiUrl(Api.channelCollectionApi, apiPathVariable));
+        }
+    }
 }
 
 
@@ -54,18 +76,13 @@ function search() {
 function initData() {
     // 조회날짜 설정
     setSearchDate("startDate", "endDate");
-
-    searchKeyword = encodeURIComponent($("#keyword").val());
-    searchOptionParam = "startDate=" + getStartDate()
-                        + "&endDate=" + getEndDate()
-                        + "&channels=" + getSelectedChannels();
 }
 
 // 차트 초기화
 function initChart() {
-    channelCollectionSumPieChart            = new ChartPie("channelCollectionSumPieChart");
     channelCollectionDataAreaZoomChart      = new ChartDataAreaZoom("channelCollectionDataAreaZoomChart");
     hotKeywordCollectionDataAreaZoomChart   = new ChartDataAreaZoom("hotKeywordCollectionDataAreaZoomChart");
+    channelCollectionSumPieChart            = new ChartPie("channelCollectionSumPieChart");
 }
 
 // View Event 초기화
@@ -89,27 +106,26 @@ function initViewEvent() {
         $(this).addClass("on").siblings().removeClass("on");
 
         if($(".list-btn .list01").hasClass("on")){
-            $("article > div").animate({width:"100%",marginLeft:"0"}, 1000, function(){
-                channelCollectionSumPieChart.resize();           // 채널별추이 차트
-                channelCollectionDataAreaZoomChart.resize();     // 수집추이 차트
-                hotKeywordCollectionDataAreaZoomChart.resize();  // 화제어 채널별 추이 차트
-            });
+            var dataBoxCount = $("article > div").length;
+            var dataBoxIdx = 0;
+
+            $("article > div").animate({width:"100%",marginLeft:"0"});
             $(".graph-right").css({marginTop:"40px"});
         }else{
-            $(".graph-left, .graph-right").animate({width:"47.8%"}, 1000, function(){
-                channelCollectionSumPieChart.resize();           // 채널별추이 차트
-                channelCollectionDataAreaZoomChart.resize();     // 수집추이 차트
-                hotKeywordCollectionDataAreaZoomChart.resize();  // 화제어 채널별 추이 차트
-            });
+
+            var dataBoxCount = $(".graph-left, .graph-right").length;
+            var dataBoxIdx = 0;
+
+            $(".graph-left, .graph-right").animate({width:"47.8%"});
             $(".graph-right").css({marginTop:"0",marginLeft:"40px"});
 
         }
 
-        // setTimeout(function() {
-        //     channelCollectionSumPieChart.resize();           // 채널별추이 차트
-        //     channelCollectionDataAreaZoomChart.resize();     // 수집추이 차트
-        //     hotKeywordCollectionDataAreaZoomChart.resize();  // 화제어 채널별 추이 차트
-        // }, 2000);
+        setTimeout(function() {
+            channelCollectionSumPieChart.resize();           // 채널별추이 차트
+            channelCollectionDataAreaZoomChart.resize();     // 수집추이 차트
+            hotKeywordCollectionDataAreaZoomChart.resize();  // 화제어 채널별 추이 차트
+        }, 2000);
 
     });
 
@@ -135,20 +151,27 @@ function initViewEvent() {
     $("#btnSend").click(function(){
 
         var keyword = encodeURIComponent($("#keyword").val());
-
         if (!keyword || keyword.replace( /^\s+|\s+$/g, "") == ""){
             alert("검색어를 입력해 주세요.");
             return;
         }
 
-        search();
+        // 선택된 채널 가져오기
+        selectedChannels = getSelectedChannels();
+        if (selectedChannels.length == 0) {
+            alert("하나 이상의 채널을 선택해 주세요.");
+            return;
+        }
+
+        cleanView();
+        searchWordCloud();
     });
 
     $("#siteOption").change(function(){
         var siteCode = $("#siteOption option:selected").val();
         $("iframe").each(function(){
             var fContentWindow = $(this).get(0).contentWindow;
-            fContentWindow.searchWordCloud(searchKeyword, searchOptionParam);
+            fContentWindow.searchWordCloud(requestApiUrl(Api.wordCloudApi, apiPathVariable));
 
             if (siteCode == "1") {
                 fContentWindow.licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJiYWJvb3RvdG8iLCJMSUNFTlNFX1MiOjE1NTkxNDIwMDAsIkxJQ0VOU0VfRSI6MTU5MDY3ODAwMH0.i9U4W-neXAMREwck4_XPpCqrxWC48Wd4Fgfwn0L0VJ0";
@@ -167,10 +190,26 @@ function initViewEvent() {
 }
 
 // 이벤트 호출
-function callSendEventListener(target, value) {
+function callSendEventListener(target, valueObj) {
+
     if (target == "hotKeywordCollectionDataAreaZoomChart") {
-        $("#hotKeyword").html(" - " + value);
-        hotKeywordCollectionDataAreaZoomChart.searchKeyword(encodeURIComponent(value), searchOptionParam);
+
+        if (!valueObj) {
+            $("#hotKeyword").html("");
+            hotKeywordCollectionDataAreaZoomChart.clear();
+            return;
+        }
+
+        $("#hotKeyword").html(" - " + valueObj.name);
+
+        var hotKeywordApiPathVariable = $.extend({}, apiPathVariable);
+        hotKeywordApiPathVariable.keyword = encodeURIComponent(valueObj.name);
+
+        if (hotKeywordApiPathVariable.chnlCd) {
+            hotKeywordCollectionDataAreaZoomChart.searchKeyword(requestApiUrl(Api.channelDetailCollectionApi, apiPathVariable));
+        } else {
+            hotKeywordCollectionDataAreaZoomChart.searchKeyword(requestApiUrl(Api.channelCollectionApi, hotKeywordApiPathVariable));
+        }
     }
 }
 
@@ -184,11 +223,11 @@ function getEndDate() {
     return $("#endDate").val().replace(/-/gi, "");
 }
 
-// 조회조건 선택된 채널 코드값 반환 (10,20,30)
+// 조회조건 선택된 채널 코드값 반환
 function getSelectedChannels() {
     var channels = new Array();
     $("input:checkbox[name=chkChannel]:checked").each(function () {
         channels.push(this.value);
     });
-    return channels.join(",");
+    return channels;
 }

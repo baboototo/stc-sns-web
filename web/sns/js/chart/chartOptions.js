@@ -1,20 +1,26 @@
 
 var ChartLoading = function() {
     return {
-        text : "Loading...",
-        effect : "spin",
+        text : 'Loading',
+        effect : 'spin',
         textStyle : {
             fontSize : 20,
         },
         effectOption: {
-            backgroundColor: "rgba(0,0,0,0.8)"
+            backgroundColor: 'rgba(0,0,0,0.8)'
         }
     };
 };
 
 var ChartNoDataLoadingOption = function() {
     return {
-        text: "데이터 없음"
+        text: '',
+        x: 'center',
+        y: 'center',
+        effect : null,
+        effectOption: {
+            backgroundColor: 'rgba(255, 255, 255, 0.8)'
+        }
     };
 };
 

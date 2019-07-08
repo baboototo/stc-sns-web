@@ -1,13 +1,20 @@
 var originalWebDocumentGridTable;
 
-function searchOriginalWebDocumentGrid(keyword, parameters) {
-    requestGet(Api.originalWebDocumentApi + "/" + keyword + "?" + parameters, setDataOriginalWebDocumentGrid);
+function searchOriginalWebDocumentGrid(apiUrl) {
+    requestGet(apiUrl, setDataOriginalWebDocumentGrid);
+}
+
+function clearDataOriginalWebDocumentGrid() {
+    originalWebDocumentGridTable.clear();
+    originalWebDocumentGridTable.draw();
 }
 
 function setDataOriginalWebDocumentGrid(data) {
     originalWebDocumentGridTable.clear();
     originalWebDocumentGridTable.rows.add(data);
     originalWebDocumentGridTable.draw();
+    $('.dataTables_scrollBody #originalWebDocumentGrid').prepend('<caption class="font_blind">body원문데이터리스트</caption>');
+    $('.dataTables_scrollBody').next('.dataTables_scrollFoot').children(".dataTables_scrollFootInner").children("table").prepend('<caption class="font_blind">footer원문데이터리스트</caption><tbody><tr><th scope="row" class="blind"></th></tr></tbody>');
 }
 
 function initOriginalWebDocumentGrid() {
