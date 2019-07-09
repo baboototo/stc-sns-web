@@ -24,7 +24,7 @@ var ChartPie = function (charPieId) {
         legend: {
             orient : 'horizontal',
             x : 'center',
-            y: 'bottom'
+            y: 420
         },
         toolbox: {
             show : true,
@@ -150,7 +150,7 @@ var ChartDataAreaZoom = function (chartDataAreaZoomId) {
         legend: {
             orient : 'horizontal',
             x : 'center',
-            y: 440
+            y: 420
         },
         toolbox: {
             show : true,
@@ -191,15 +191,15 @@ var ChartDataAreaZoom = function (chartDataAreaZoomId) {
         dataZoom : {
             show : true,
             realtime : true,
-            y: 390,
+            y: 370,
             start : 40,
             end : 100
         },
         grid : {
             x: 40,
-            y: 60,
+            y: 40,
             x2: 40,
-            y2: 100
+            y2: 120
         },
         xAxis : [
             {

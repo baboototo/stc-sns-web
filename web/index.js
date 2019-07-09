@@ -125,6 +125,9 @@ function initViewEvent() {
             channelCollectionSumPieChart.resize();           // 채널별추이 차트
             channelCollectionDataAreaZoomChart.resize();     // 수집추이 차트
             hotKeywordCollectionDataAreaZoomChart.resize();  // 화제어 채널별 추이 차트
+
+            drawHotKeywordGrid();
+            drawDataOriginalWebDocumentGrid();
         }, 2000);
 
     });
@@ -206,7 +209,7 @@ function callSendEventListener(target, valueObj) {
         hotKeywordApiPathVariable.keyword = encodeURIComponent(valueObj.name);
 
         if (hotKeywordApiPathVariable.chnlCd) {
-            hotKeywordCollectionDataAreaZoomChart.searchKeyword(requestApiUrl(Api.channelDetailCollectionApi, apiPathVariable));
+            hotKeywordCollectionDataAreaZoomChart.searchKeyword(requestApiUrl(Api.channelDetailCollectionApi, hotKeywordApiPathVariable));
         } else {
             hotKeywordCollectionDataAreaZoomChart.searchKeyword(requestApiUrl(Api.channelCollectionApi, hotKeywordApiPathVariable));
         }

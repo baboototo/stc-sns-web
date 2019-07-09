@@ -1257,7 +1257,7 @@
 					thead = $('<thead/>').appendTo($this);
 				}
 				oSettings.nTHead = thead[0];
-			
+				
 				var tbody = $this.children('tbody');
 				if ( tbody.length === 0 ) {
 					tbody = $('<tbody/>').appendTo($this);
@@ -11731,7 +11731,7 @@
 			 *  @dtopt Language
 			 *  @name DataTable.defaults.language.searchPlaceholder
 			 */
-			"sSearchPlaceholder": "",
+			"sSearchPlaceholder": "검색어입력",
 	
 	
 			/**
@@ -15505,7 +15505,7 @@ $.extend( AutoFill.prototype, {
 		var that = this;
 		var dt = this.s.dt;
 		var dtScroll = $('div.dataTables_scrollBody', this.s.dt.table().container());
-
+		
 		// Make the instance accessible to the API
 		dt.settings()[0].autoFill = this;
 

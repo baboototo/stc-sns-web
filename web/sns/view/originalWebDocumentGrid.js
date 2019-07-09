@@ -4,6 +4,10 @@ function searchOriginalWebDocumentGrid(apiUrl) {
     requestGet(apiUrl, setDataOriginalWebDocumentGrid);
 }
 
+function drawDataOriginalWebDocumentGrid() {
+    originalWebDocumentGridTable.draw();
+}
+
 function clearDataOriginalWebDocumentGrid() {
     originalWebDocumentGridTable.clear();
     originalWebDocumentGridTable.draw();

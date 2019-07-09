@@ -7,6 +7,10 @@ function searchHotKeywordGrid(apiUrl, apiPathVariable) {
     requestGet(apiUrl, setHotKeywordGrid);
 }
 
+function drawHotKeywordGrid() {
+    hotKeywordGridTable.draw();
+}
+
 function clearHotKeywordGrid() {
     hotKeywordGridTable.clear();
     hotKeywordGridTable.draw();
@@ -55,11 +59,14 @@ function initHotKeywordGrid() {
         ],
         columnDefs: [
             {
-                targets: 1, className: 'dt-body-center'
+                targets: 0, width: "20%"
             },
             {
-                targets: 2, className: 'dt-body-center'
+                targets: 1, width: "40%",className: 'dt-body-center'
             },
+            {
+                targets: 2, width: "40%", className: 'dt-body-center'
+            }
         ]
     });
 

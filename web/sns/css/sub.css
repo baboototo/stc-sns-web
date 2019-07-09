@@ -1,9 +1,9 @@
 @charset "utf-8";
 @font-face{
-	font-family:nbg;
-	src:url("../css/font/NanumBarunGothic.eot");
-	src:local(※), url("../css/font/NanumBarunGothic.woff") format("woff"),
-	url("../css/font/NanumBarunGothic.ttf") format("truetype");
+   font-family:nbg;
+   src:url("font/NanumBarunGothic.eot");
+   src:local(※), url("font/NanumBarunGothic.woff") format("woff"),
+      url("font/NanumBarunGothic.ttf") format("truetype");
 }
 body, h1, h2, h3, h4, p, ul, dl, dd, button, strong, dl, dd, th, td, i, input{margin:0px;padding:0px;}
 strong{font-weight:normal}
@@ -176,17 +176,17 @@ body{
 .data-box.grid_type select,
 .data-box.grid_type input[type="search"]{
 	border: 1px solid #ccc;
-	height: 27px;
-	padding-left: 11px;
-	border-radius: 5px;
-	margin-bottom:15px;
+    height: 27px;
+    padding-left: 11px;
+    border-radius: 5px;
+    margin-bottom:15px;
 }
 .data-box.grid_type select{
 	width:75px;
-	background: url("../images/slideDown.png") no-repeat 88% 50%;
+	background: url(../images/slideDown.png) no-repeat 88% 50%;
 	-moz-appearance: none;
-	-webkit-appearance: none;
-	appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 .data-box.grid_type input[type="search"]{
 	width:150px;
