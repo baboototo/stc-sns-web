@@ -304,9 +304,10 @@ table.dataTable,table.dataTable th,table.dataTable td {
 }
 
 .dataTables_wrapper .dataTables_paginate {
-    display: flex;
-    justify-content: center;
+    /*display: flex;*/
+    /*justify-content: center;/*/
     padding: 10px 0;
+    text-align:center;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -399,11 +400,16 @@ table.dataTable,table.dataTable th,table.dataTable td {
 .dataTables_wrapper .dataTables_scroll {
     clear: both
 }
-.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
-    *margin-top: -1px;
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody{
+	*margin-top: -1px;
     -webkit-overflow-scrolling: touch;
 }
-
+#data03 .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
+    height:414px !important;
+}
+#data04 .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody{
+	height:319px !important;
+}
 .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>thead>tr>th,.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>thead>tr>td,.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>tbody>tr>th,.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>tbody>tr>td {
     vertical-align: middle
 }

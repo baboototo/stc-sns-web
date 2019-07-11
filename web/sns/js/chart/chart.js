@@ -18,13 +18,14 @@ var ChartPie = function (charPieId) {
             trigger: 'item',
             formatter: "{b}<br/>{c}건 ({d}%)",
             textStyle: {
-                align: 'center'
+                align: 'center',
+                fontSize: 13
             }
         },
         legend: {
             orient : 'horizontal',
             x : 'center',
-            y: 420
+            y: 415
         },
         toolbox: {
             show : true,
@@ -145,12 +146,16 @@ var ChartDataAreaZoom = function (chartDataAreaZoomId) {
     this._chartLoaing = ChartLoading();
     this._chartOptions = {
         tooltip : {
-            trigger: 'axis'
+            trigger: 'axis',
+            textStyle: {
+                align: 'center',
+                fontSize: 13
+            }
         },
         legend: {
             orient : 'horizontal',
             x : 'center',
-            y: 420
+            y: 415
         },
         toolbox: {
             show : true,
