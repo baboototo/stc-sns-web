@@ -6,23 +6,31 @@ var hotKeywordCollectionDataAreaZoomChart;  // 화제어 채널별 추이 차트
 
 $(document).ready(function(){
 
-    initData();
-    initChart();
-    initViewEvent();
+    initSNSView();
+    
+});
+
+// SNS View 초기화
+function initSNSView() {
+    initSNSData();
+    initSNSChart();
+    initSNSViewEvent();
     browserCheck(); //브라우저 체크
     initHotKeywordGrid();
     initOriginalWebDocumentGrid();
 
-    var iFrameLoadingCount = 0;
-    $("iframe").on("load", function() {
-        iFrameLoadingCount++;
-        if (iFrameLoadingCount == $("iframe").length) {
-            $("#btnSend").trigger("click");
-        }
+    $("#wordCloudIframe").on("load", function() {
+        $("#btnSend").trigger("click");
     });
-    
-});
 
+    // var iFrameLoadingCount = 0;
+    // $("iframe").on("load", function() {
+    //     iFrameLoadingCount++;
+    //     if (iFrameLoadingCount == $("iframe").length) {
+    //         $("#btnSend").trigger("click");
+    //     }
+    // });
+}
 
 function cleanView() {
     clearHotKeywordGrid();
@@ -74,20 +82,20 @@ function searchChartGrid(searchWordCloudCount) {
 
 
 // 데이터 초기화
-function initData() {
+function initSNSData() {
     // 조회날짜 설정
     setSearchDate("startDate", "endDate");
 }
 
 // 차트 초기화
-function initChart() {
+function initSNSChart() {
     channelCollectionDataAreaZoomChart      = new ChartDataAreaZoom("channelCollectionDataAreaZoomChart");
     hotKeywordCollectionDataAreaZoomChart   = new ChartDataAreaZoom("hotKeywordCollectionDataAreaZoomChart");
     channelCollectionSumPieChart            = new ChartPie("channelCollectionSumPieChart");
 }
 
 // View Event 초기화
-function initViewEvent() {
+function initSNSViewEvent() {
     // 차트/그리드 박스 마우스 이벤트
     $(".data-box").each(function(idx, el){
         $(this).hover(
@@ -178,7 +186,7 @@ function initViewEvent() {
             fContentWindow.searchWordCloud(requestApiUrl(Api.wordCloudApi, apiPathVariable));
 
             if (siteCode == "1") {
-                fContentWindow.licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJiYWJvb3RvdG8iLCJMSUNFTlNFX1MiOjE1NTkxNDIwMDAsIkxJQ0VOU0VfRSI6MTU5MDY3ODAwMH0.i9U4W-neXAMREwck4_XPpCqrxWC48Wd4Fgfwn0L0VJ0";
+                fContentWindow.licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJNQ1NUIiwiTElDRU5TRV9TIjoxNTY0OTMwODAwLCJMSUNFTlNFX0UiOjE1OTY0NjY4MDB9.Mx2gWlXZsYhtzfKiQD8rfBAMT4InvORqKe98ZAft5Hk";
             } else {
                 fContentWindow.licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJraXNkIiwiTElDRU5TRV9TIjoxNTYxNTYxMjAwLCJMSUNFTlNFX0UiOjE1OTMwOTcyMDB9.4rZev4nsZzaJDRzvPSF_syybpYOALN676JpbPfjIpMc"
             }
@@ -186,7 +194,7 @@ function initViewEvent() {
         });
 
         if (siteCode == "1") {
-            licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJiYWJvb3RvdG8iLCJMSUNFTlNFX1MiOjE1NTkxNDIwMDAsIkxJQ0VOU0VfRSI6MTU5MDY3ODAwMH0.i9U4W-neXAMREwck4_XPpCqrxWC48Wd4Fgfwn0L0VJ0";
+            licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJNQ1NUIiwiTElDRU5TRV9TIjoxNTY0OTMwODAwLCJMSUNFTlNFX0UiOjE1OTY0NjY4MDB9.Mx2gWlXZsYhtzfKiQD8rfBAMT4InvORqKe98ZAft5Hk";
         } else {
             licence["licence"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSX05BTUUiOiJraXNkIiwiTElDRU5TRV9TIjoxNTYxNTYxMjAwLCJMSUNFTlNFX0UiOjE1OTMwOTcyMDB9.4rZev4nsZzaJDRzvPSF_syybpYOALN676JpbPfjIpMc"
         }

@@ -17,10 +17,10 @@ function initWordCloud() {
             top: 'center',
             width: '100%',
             height: '100%',
-            sizeRange: [15, 100],
-            rotationRange: [-90, 90],
-            rotationStep: 45,
-            gridSize: 5,
+            sizeRange: [10, 80],
+            rotationRange: [0, 0],
+            rotationStep: 0,
+            gridSize: 20,
             shape: 'pentagon',
             maskImage: maskImage,
             drawOutOfBound: false,
@@ -52,7 +52,6 @@ function initEvent() {
 
 
 function setChartData(data) {
-
     if (addEventSearchEnd) {
         addEventSearchEnd(data.length);
     }
