@@ -48,7 +48,8 @@ function searchWordCloud() {
         chnlCd: "",
         channels: selectedChannels.join(","),
         startDate: getStartDate(),
-        endDate: getEndDate()
+        endDate: getEndDate(),
+        rowCount: 200
     };
 
     // 선택된 채널에 따른 조회 조건값 변경
