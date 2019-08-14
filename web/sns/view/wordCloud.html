@@ -17,8 +17,8 @@
 </head>
 <body style="width: 100vw; height: 100vh; min-height: 450px">
     <div>
-        <div class="select-box" style="position: absolute; right: 0; z-index: 10;">
-            <label for="wordCloudOption" class="font_blind">wordkind</label>
+        <div class="select-box" style="position: absolute; right: 0; z-index: 20;">
+            <label for="wordCloudOption" class="font_blind"></label>
             <select id="wordCloudOption" class="select-option">
                 <option value="기본">기본</option>
                 <option value="옷">옷</option>
@@ -30,6 +30,17 @@
                 <option value="퍼즐">퍼즐</option>
             </select>
         </div>
+
+        <div id="wordCloudCountBox" class="select-box" style="position: absolute; right: 120px; margin-right: 0px; z-index: 10;">
+            <label for="wordCloudCount" class="font_blind"></label>
+            <select id="wordCloudCount" class="select-option">
+                <option value="100">100</option>
+                <option value="200" selected>200</option>
+                <option value="250">250</option>
+                <option value="300">300</option>
+            </select>
+        </div>
+
         <div id="wordCloudChart" style="width: 100vw; height: 100vh;"></div>
     </div>
 </body>

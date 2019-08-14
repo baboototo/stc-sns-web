@@ -169,12 +169,12 @@ body{
 	background-color:#fff;
 }
 .select-option {
-	width: 175px;
+	width: 75px;
 	height: 32px;
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
-	background:url("../images/slideDown.png") no-repeat 80% 50%;
+	background:url("../images/slideDown.png") no-repeat 90% 50%;
 	border:0;
     position: absolute;
     padding-left:11px;
@@ -215,10 +215,10 @@ body{
     margin-bottom: 15px;
 }
 .select-box{
-	width:150px;
+	width:80px;
 	height:32px;
 	float:right;
-	margin-right:10px;
+	margin-right:20px;
 }
 .data-box.grid_type .dataTables_length label{
 	display: inline-block;
@@ -259,13 +259,13 @@ input[type="search"]::placeholder {font-size:12px;color:#cacaca}
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) { /* chrome */
 	.select-option{
-		width:150px;
+		width:75px;
 		background:url("../images/slideDown.png") no-repeat 95% 50%;
 		left: 0;
 	}
 	.data-box.grid_type select{
-		width:75px;
-		background: url(../images/slideDown.png) no-repeat 90% 50%;
+		width:70px;
+		background: url("../images/slideDown.png") no-repeat 90% 50%;
 	}
 }
 

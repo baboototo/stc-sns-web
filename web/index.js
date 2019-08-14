@@ -5,9 +5,8 @@ var channelCollectionDataAreaZoomChart;     // 수집추이 차트
 var hotKeywordCollectionDataAreaZoomChart;  // 화제어 채널별 추이 차트
 
 $(document).ready(function(){
-
     initSNSView();
-    
+
 });
 
 // SNS View 초기화
@@ -20,16 +19,35 @@ function initSNSView() {
     initOriginalWebDocumentGrid();
 
     $("#wordCloudIframe").on("load", function() {
+        var wordCloudIframe = $(this).get(0).contentWindow;
+
+        if (wordCloudIframe) {
+            wordCloudIframe.addEventWordCloudRowChange(searchWordCloudByCount);
+        }
+
         $("#btnSend").trigger("click");
     });
+}
 
-    // var iFrameLoadingCount = 0;
-    // $("iframe").on("load", function() {
-    //     iFrameLoadingCount++;
-    //     if (iFrameLoadingCount == $("iframe").length) {
-    //         $("#btnSend").trigger("click");
-    //     }
-    // });
+//SNS View 초기화
+function initSNSViewMobile() {
+    initSNSData();
+    initSNSChart();
+    initSNSViewEvent();
+    browserCheck(); //브라우저 체크
+    initHotKeywordGrid();
+    initOriginalWebDocumentGrid();
+
+    $("#wordCloudIframe").on("load", function() {
+        var wordCloudIframe = $(this).get(0).contentWindow;
+
+        if (wordCloudIframe) {
+            wordCloudIframe.addEventWordCloudRowChange(searchWordCloudByCount);
+            wordCloudIframe.document.getElementById("wordCloudCountBox").style.display = "none";
+        }
+
+        $("#btnSend").trigger("click");
+    });
 }
 
 function cleanView() {
@@ -40,7 +58,16 @@ function cleanView() {
     channelCollectionDataAreaZoomChart.clear();
 }
 
+// 워드클라우드 조회
 function searchWordCloud() {
+    var wordCloudRowCountV = 200;
+    var wordCloudIframe = $("#wordCloudIframe").get(0).contentWindow;
+
+    // 워드클라우드 Iframe 확인
+    if (wordCloudIframe) {
+        var wordCloudRowCountE = wordCloudIframe.document.getElementById("wordCloudCount");
+        wordCloudRowCountV = wordCloudRowCountE.options[wordCloudRowCountE.selectedIndex].value;
+    }
 
     // 조회 조건값 설정
     apiPathVariable = {
@@ -49,7 +76,7 @@ function searchWordCloud() {
         channels: selectedChannels.join(","),
         startDate: getStartDate(),
         endDate: getEndDate(),
-        rowCount: 200
+        rowCount: wordCloudRowCountV
     };
 
     // 선택된 채널에 따른 조회 조건값 변경
@@ -60,8 +87,19 @@ function searchWordCloud() {
         delete apiPathVariable.chnlCd;
     }
 
-    // 워드클라우드 조회
-    $("#wordCloudIframe").get(0).contentWindow.searchWordCloud(requestApiUrl(Api.wordCloudApi, apiPathVariable), searchChartGrid);
+    // 워드클라우드 조회 후 차트 및 그리드 조회
+    wordCloudIframe.searchWordCloud(requestApiUrl(Api.wordCloudApi, apiPathVariable), searchChartGrid);
+}
+
+// 특정 개수 만큼 워드클라우드 / 화재어 조회
+function searchWordCloudByCount(rowCount) {
+    // 조회 조건값 설정
+    apiPathVariable.rowCount = rowCount;
+
+    // 워드클라우드 및 화제어 조회
+    var wordCloudIframe = $("#wordCloudIframe").get(0).contentWindow;
+    wordCloudIframe.searchWordCloud(requestApiUrl(Api.wordCloudApi, apiPathVariable));
+    searchHotKeywordGrid(requestApiUrl(Api.wordCloudApi, apiPathVariable), apiPathVariable);
 }
 
 function searchChartGrid(searchWordCloudCount) {

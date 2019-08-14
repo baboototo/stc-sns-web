@@ -5,7 +5,9 @@ $(document).ready(function(){
 });
 
 
-var chart, option, maskImage, addEventSearchEnd;
+var chart, option, maskImage, callBackSearchEnd, callBackRowChange;
+var gridSize = [20, 15, 10, 7];
+var selectedWordCloudIdx = 0;
 
 function initWordCloud() {
     maskImage = new Image();
@@ -20,8 +22,8 @@ function initWordCloud() {
             sizeRange: [10, 80],
             rotationRange: [0, 0],
             rotationStep: 0,
-            gridSize: 20,
-            shape: 'pentagon',
+            gridSize: 10,
+            shape: 'circle',
             maskImage: maskImage,
             drawOutOfBound: false,
             textStyle: {
@@ -48,18 +50,27 @@ function initEvent() {
     $("#wordCloudOption").change(function(){
         setWordCloudImage();
     });
+
+    $("#wordCloudCount").change(function(){
+        if (callBackRowChange) {
+            callBackRowChange($(this).val());
+        }
+    });
 }
 
 
 function setChartData(data) {
-    if (addEventSearchEnd) {
-        addEventSearchEnd(data.length);
+    if (callBackSearchEnd) {
+        callBackSearchEnd(data.length);
     }
+
+    selectedWordCloudIdx = $("#wordCloudCount option").index($("#wordCloudCount option:selected"));
 
     if (data && data.length > 0) {
         maskImage.onload = function () {
             option.series[0].maskImage
             option.series[0].data = data;
+            option.series[0].gridSize = gridSize[selectedWordCloudIdx];
             chart.setOption(option);
         };
 
@@ -78,7 +89,13 @@ function setWordCloudImage() {
 }
 
 function searchWordCloud(apiUrl, addEventSearchEnd) {
-    this.addEventSearchEnd = addEventSearchEnd;
+    callBackSearchEnd = addEventSearchEnd;
     chart.clear();
     requestGet(apiUrl, setChartData);
 }
+
+function addEventWordCloudRowChange( addEventWordCloudRowChange) {
+    callBackRowChange = addEventWordCloudRowChange;
+}
+
+
