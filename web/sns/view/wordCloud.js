@@ -68,6 +68,12 @@ function setChartData(data) {
 
     if (data && data.length > 0) {
         maskImage.onload = function () {
+
+            // 조회된 데이터의 2번째 값을 2배 곱하여 1번째 값으로 넘어줌
+            if (data.length > 2) {
+                data[0].value = (data[1].value * 2 );
+            }
+
             option.series[0].maskImage
             option.series[0].data = data;
             option.series[0].gridSize = gridSize[selectedWordCloudIdx];

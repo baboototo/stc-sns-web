@@ -76,7 +76,9 @@ function searchWordCloud() {
         channels: selectedChannels.join(","),
         startDate: getStartDate(),
         endDate: getEndDate(),
-        rowCount: wordCloudRowCountV
+        rowCount: wordCloudRowCountV,
+        useExcludeSearchKeyword: "Y",
+        useExcludeKeyword: "Y"
     };
 
     // 선택된 채널에 따른 조회 조건값 변경
@@ -99,7 +101,7 @@ function searchWordCloudByCount(rowCount) {
     // 워드클라우드 및 화제어 조회
     var wordCloudIframe = $("#wordCloudIframe").get(0).contentWindow;
     wordCloudIframe.searchWordCloud(requestApiUrl(Api.wordCloudApi, apiPathVariable));
-    searchHotKeywordGrid(requestApiUrl(Api.wordCloudApi, apiPathVariable), apiPathVariable);
+    // searchHotKeywordGrid(requestApiUrl(Api.wordCloudApi, apiPathVariable), apiPathVariable);
 }
 
 function searchChartGrid(searchWordCloudCount) {
@@ -117,6 +119,7 @@ function searchChartGrid(searchWordCloudCount) {
             channelCollectionDataAreaZoomChart.searchKeyword(requestApiUrl(Api.channelCollectionApi, apiPathVariable));
         }
     }
+    // 여기서 Loading Bar 해지
 }
 
 
