@@ -44,7 +44,10 @@ function initHotKeywordGrid() {
                 className:      'a-control',
                 orderable:      false,
                 defaultContent: '',
-                data:           null
+                data:           null,
+                render: function ( data, type, row ) {
+                    return '<button type="button" ></button>';
+                }
             },
             {data: 'name'},
             {

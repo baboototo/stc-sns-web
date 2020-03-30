@@ -119,9 +119,7 @@ function searchChartGrid(searchWordCloudCount) {
             channelCollectionDataAreaZoomChart.searchKeyword(requestApiUrl(Api.channelCollectionApi, apiPathVariable));
         }
     }
-    // 여기서 Loading Bar 해지
 }
-
 
 // 데이터 초기화
 function initSNSData() {
@@ -131,9 +129,14 @@ function initSNSData() {
 
 // 차트 초기화
 function initSNSChart() {
-    channelCollectionDataAreaZoomChart      = new ChartDataAreaZoom("channelCollectionDataAreaZoomChart");
-    hotKeywordCollectionDataAreaZoomChart   = new ChartDataAreaZoom("hotKeywordCollectionDataAreaZoomChart");
-    channelCollectionSumPieChart            = new ChartPie("channelCollectionSumPieChart");
+    channelCollectionDataAreaZoomChart = new ChartDataAreaZoom("channelCollectionDataAreaZoomChart");
+    channelCollectionDataAreaZoomChart.setUseWebAccessibility(true);
+
+    hotKeywordCollectionDataAreaZoomChart = new ChartDataAreaZoom("hotKeywordCollectionDataAreaZoomChart");
+    hotKeywordCollectionDataAreaZoomChart.setUseWebAccessibility(true);
+
+    channelCollectionSumPieChart = new ChartPie("channelCollectionSumPieChart");
+    channelCollectionSumPieChart.setUseWebAccessibility(true);
 }
 
 // View Event 초기화

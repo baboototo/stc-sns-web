@@ -86,6 +86,7 @@ var ChartPie = function (charPieId) {
     };
 
     this._addEventChartNoData;
+    this._isUseWebAccessibility = false;
 
     return this;
 };
@@ -101,11 +102,16 @@ ChartPie.prototype.setOptions = function (options) {
 ChartPie.prototype.addEventChartNoData = function (noDataCallBackFunction) {
     this._addEventChartNoData = noDataCallBackFunction;
 };
+ChartPie.prototype.setUseWebAccessibility = function (isUseWebAccessibility) {
+    this._isUseWebAccessibility = isUseWebAccessibility;
+};
+
 
 ChartPie.prototype.searchKeyword = function (apiUrl) {
     var viewId = this._id;
     var chartDom = this._chartDom;
     var chartOptions = this._chartOptions;
+    var isUseWebAccessibility = this._isUseWebAccessibility;
     var addEventChartNoData = this._addEventChartNoData;
 
     chartDom.clear();
@@ -113,6 +119,12 @@ ChartPie.prototype.searchKeyword = function (apiUrl) {
 
     function apiCallBackFunction(data) {
         if (data) {
+
+            // 웹접근성 사용시 웹접근성에 해당하는 테이블을 생성함.
+            if (isUseWebAccessibility) {
+                chartPieWebAccessibility("WA_" + viewId, data);
+            }
+
             var channelSum = chartValueSum(data["series"]);
             chartOptions["title"]["text"]       = addNumberComma(channelSum) + "건";
             chartOptions["legend"]["data"]      = data["legend"];
@@ -219,6 +231,8 @@ var ChartDataAreaZoom = function (chartDataAreaZoomId) {
         ]
     };
     this._addEventChartNoData;
+    this._isUseWebAccessibility = false;
+
     return this;
 };
 ChartDataAreaZoom.prototype.resize = function () {
@@ -233,9 +247,14 @@ ChartDataAreaZoom.prototype.setOptions = function (options) {
 ChartDataAreaZoom.prototype.addEventChartNoData = function (noDataCallBackFunction) {
     this._addEventChartNoData = noDataCallBackFunction;
 };
+ChartDataAreaZoom.prototype.setUseWebAccessibility = function (isUseWebAccessibility) {
+    this._isUseWebAccessibility = isUseWebAccessibility;
+};
 ChartDataAreaZoom.prototype.searchKeyword = function (apiUrl) {
+    var viewId = this._id;
     var chartDataAreaZoom = this._chartDom;
     var chartDataAreaZoomOptions = this._chartOptions;
+    var isUseWebAccessibility = this._isUseWebAccessibility;
     var addEventChartNoData = this._addEventChartNoData;
 
     chartDataAreaZoom.clear();
@@ -243,6 +262,12 @@ ChartDataAreaZoom.prototype.searchKeyword = function (apiUrl) {
 
     function apiCallBackFunction(data) {
         if (data) {
+
+            // 웹접근성 사용시 웹접근성에 해당하는 테이블을 생성함.
+            if (isUseWebAccessibility) {
+                dataAreaZoomWebAccessibility("WA_" + viewId, data);
+            }
+
             chartDataAreaZoomOptions["legend"]["data"]    = data["legend"];
             chartDataAreaZoomOptions["xAxis"][0]["data"]  = data["xaxis"];
             chartDataAreaZoomOptions["series"]            = data["series"];

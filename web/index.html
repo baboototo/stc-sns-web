@@ -16,6 +16,7 @@
     <script type="text/javascript" src="sns/js/common/licence.js"></script>
     <script type="text/javascript" src="sns/js/common/api.js"></script>
     <script type="text/javascript" src="sns/js/common/common.js"></script>
+    <script type="text/javascript" src="sns/js/common/webAccessibility.js"></script>
 
     <script type="text/javascript" src="sns/js/chart/chart.js"></script>
     <script type="text/javascript" src="sns/js/chart/chartUtil.js"></script>
@@ -43,7 +44,7 @@
                         <div class="select-box site">
                             <select id="siteOption" class="select-option site">
                                 <option value="1">문화셈터</option>
-                                <option value="2">미디어통계</option>
+                                <option value="2" selected>미디어통계</option>
                             </select>
                         </div>
                     </td>
@@ -51,7 +52,7 @@
                 <tr>
                     <th scope="row"><label for="keyword">검색키워드</label></th>
                     <td class="keyword">
-                        <input type="text" id="keyword" value="문화">
+                        <input type="text" id="keyword" value="통계">
                     </td>
                     <th scope="row"><label for="startDate">수집일자</label></th>
                     <td class="date">
@@ -85,14 +86,14 @@
                                     <input type="checkbox" class="chk_box" id="channelPortal" name="chkChannel" value="20" checked>
                                     <i></i>
                                 </div>
-                                <label for="channelPortal">블로그/카페</label>
+                                <label for="channelPortal">포털</label>
                             </li>
                             <li>
                                 <div class="input_box_chk type02" style="display:inline-block;">
                                     <input type="checkbox" class="chk_box" id="channelSns" name="chkChannel" value="30" checked>
                                     <i></i>
                                 </div>
-                                <label for="channelSns">트위터</label>
+                                <label for="channelSns">SNS</label>
                             </li>
                         </ul>
                         <div class="list-btn" id="viewType">
@@ -120,6 +121,15 @@
                     <div class="data-box chart_type" id="channelCollectionSumPieChart">
                     </div>
                     <i></i>
+                    <table border="1" id="WA_channelCollectionSumPieChart">
+                        <caption class="blind">채널별추이</caption>
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody>
+                            <tr></tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="data graph-right box">
                     <h3>수집추이</h3>
@@ -127,6 +137,13 @@
                         <div id="channelCollectionDataAreaZoomChart" style="width: 100%; height:100%;"></div>
                     </div>
                     <i></i>
+                    <table border="1" id="WA_channelCollectionDataAreaZoomChart">
+                        <caption class="blind">수집추이</caption>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </article>
             <article id="data03">
@@ -152,6 +169,13 @@
                         <div id="hotKeywordCollectionDataAreaZoomChart" style="width: 100%; height:100%;"></div>
                     </div>
                     <i></i>
+                    <table border="1" id="WA_hotKeywordCollectionDataAreaZoomChart">
+                        <caption class="blind">화제어 채널별 추이</caption>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </article>
             <article id="data04">

@@ -4201,7 +4201,9 @@
 				'id': ! features.f ? tableId+'_filter' : null,
 				'class': classes.sFilter
 			} )
-			.append( $('<label/>' ).append( str ) );
+			.append(  str  );
+			// STC 20191104 주석
+			// .append( $('<label/>' ).append( str ) );
 	
 		var searchFn = function() {
 			/* Update all other filter input elements for the new display */
@@ -4839,13 +4841,15 @@
 				lengths[i]
 			);
 		}
-	
-		var div = $('<div><label/></div>').addClass( classes.sLength );
+
+		// STC 20191104 주석
+		// var div = $('<div><label /></div>').addClass( classes.sLength );
+		var div = $('<div></div>').addClass( classes.sLength );
 		if ( ! settings.aanFeatures.l ) {
 			div[0].id = tableId+'_length';
 		}
 	
-		div.children().append(
+		div.append(
 			settings.oLanguage.sLengthMenu.replace( '_MENU_', select[0].outerHTML )
 		);
 	
